@@ -9,11 +9,11 @@ import EditWatchlist from "./pages/EditWatchlist";
 function App() {
 	return (
 		<Router>
-			<div className="w-screen h-screen flex justify-center">
+			<div className="w-screen h-screen max-h-screen flex justify-center bg-gradient-to-b from-primary_blue overflow-scroll">
 				
 				<div className={
-					"w-full h-full max-w-768 min-h-full max-h-screen flex flex-col items-center " + 
-					"bg-gradient-to-b from-primary_blue to-black font-sans"
+					"w-full h-full max-w-768 min-h-full max-h-screen flex-1 flex flex-col items-center " + 
+					"to-black font-sans"
 					}
 				>
 					<Switch>

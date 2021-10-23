@@ -1,19 +1,45 @@
+import { Link, useHistory } from 'react-router-dom'
+
 import LogoImg from '../../assets/img/Logo@2x.png'
 import CoinListItem, { CoinListItemProps } from '../../components/CoinListItem'
 
 import {ReactComponent as VirationSvg} from '../../assets/svg/vibration.svg'
 import {ReactComponent as LegalSvg} from '../../assets/svg/legal.svg'
+import {ReactComponent as WifiSvg} from '../../assets/svg/wifi.svg'
+import {ReactComponent as EditSvg} from '../../assets/svg/edit.svg'
 
 const Home = () => {
+	const history = useHistory();
 	const length = coins.length
+
+	const onEditPressed = () => history.push('/edit')
+
 	return (
 		<>
-					
-			<div className="my-4 grid gap-2">
+
+			<div className="my-4 grid gap-1">
 				<img src={LogoImg} width={136} alt="Logo"/>
 				<h3 className="text-primary_yellow text-center font-bold uppercase tracking-widest">
 					Moon Pillow
 				</h3>
+			</div>
+
+			<div className="self-stretch px-4">
+				<div className="flex items-center px-3 py-1 bg-secondary_dark rounded-lg">
+					<div className="h-8 w-8 grid place-content-center p-[1px]">
+						<WifiSvg/>
+					</div>
+
+					<div className="mx-2 flex-1">
+						<h4 className="text-white font-bold text-base">{'Wifi Name'}</h4>
+					</div>
+
+					<button className="flex items-center gap-2 py-3">
+						<EditSvg />
+						<span className="text-primary_yellow font-medium text-14">Edit</span>
+					</button>
+					
+				</div>
 			</div>
 			
 			<div className="self-stretch px-4 my-4">
@@ -38,9 +64,9 @@ const Home = () => {
 
 			</div>
 
-			<div className="self-stretch px-4 my-4">
+			<div className="self-stretch px-4 my-2">
 				<button className={
-						"w-full p-4 font-medium text-base rounded-md "
+						"w-full p-3 font-medium text-base rounded-md "
 						+ 
 						(
 							length===0 
@@ -48,6 +74,7 @@ const Home = () => {
 							: " text-white border border-white hover:opacity-70"
 						)
 					}
+					onClick={onEditPressed}
 				>
 					{length===0 && 'Add Crypto'}
 					{(length>0 && length<3) && 'Add/Edit Crypto'}
@@ -62,7 +89,7 @@ const Home = () => {
 					"text-center text-14 text-primary_yellow font-medium tracking-wider"
 				}
 			>
-				<a href="#" className="flex justify-center items-center">
+				<a href="/edit" className="flex justify-center items-center">
 					<VirationSvg className="mx-2"/>
 					Test vibration
 				</a>
