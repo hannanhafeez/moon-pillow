@@ -5,6 +5,10 @@ import {
 } from "react-router-dom";
 import Home from './pages/Home';
 import EditWatchlist from "./pages/EditWatchlist";
+import SelectWifi from "./pages/WifiSetup/SelectWifi";
+import WifiPassword from "./pages/WifiSetup/WifiPassword";
+import WifiManual from "./pages/WifiSetup/WifiManual";
+import ConnectWifi from "./pages/WifiSetup/ConnectWifi";
 
 function App() {
 	return (
@@ -23,6 +27,20 @@ function App() {
 						<Route path="/users">
 							<Users />
 						</Route> */}
+						<Route path="/connect-wifi">
+							<ConnectWifi />
+						</Route>
+
+						<Route path="/wifi">
+							<SelectWifi />
+						</Route>
+						<Route path="/wifi-pw">
+							<WifiPassword />
+						</Route>
+						<Route path="/wifi-manual">
+							<WifiManual />
+						</Route>
+						
 						<Route path="/edit">
 							<EditWatchlist />
 						</Route>
