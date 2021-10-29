@@ -29,7 +29,7 @@ const SelectWifi = () => {
 					Choose a Wi-Fi network
 				</h4>
 				
-				{/* <Alert 
+				{/* <Alert danger
 					message="Oops, there seems to be a problem connecting to your network. Check that you're within the Wi-Fi range and remember to select 2.4ghz."
 				/> */}
 

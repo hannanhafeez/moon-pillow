@@ -49,7 +49,7 @@ const WifiPassword = () => {
 			</div>
 			
 			<div className="self-stretch px-4 my-4 rounded-lg">
-				<button
+				<button onClick={()=>undefined}
 					className="w-full p-3 font-medium text-base rounded-md text-gray-500 hover:text-black bg-secondary hover:bg-primary_yellow"
 				>
 					Connect

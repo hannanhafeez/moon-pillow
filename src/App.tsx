@@ -9,6 +9,7 @@ import SelectWifi from "./pages/WifiSetup/SelectWifi";
 import WifiPassword from "./pages/WifiSetup/WifiPassword";
 import WifiManual from "./pages/WifiSetup/WifiManual";
 import ConnectWifi from "./pages/WifiSetup/ConnectWifi";
+import LandingWifi from "./pages/WifiSetup/LandingWifi";
 
 function App() {
 	return (
@@ -27,6 +28,9 @@ function App() {
 						<Route path="/users">
 							<Users />
 						</Route> */}
+						<Route path="/landing">
+							<LandingWifi />
+						</Route>
 						<Route path="/connect-wifi">
 							<ConnectWifi />
 						</Route>

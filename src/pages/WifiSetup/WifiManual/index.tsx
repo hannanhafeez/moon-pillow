@@ -50,7 +50,7 @@ const WifiManual = () => {
 				
 			</div>
 			
-			<div className="self-stretch px-4 my-8 rounded-lg">
+			<div className="self-stretch px-4 py-2 my-6 rounded-lg">
 				<button
 					className="w-full p-3 font-medium text-base rounded-md text-gray-500 hover:text-black bg-secondary hover:bg-primary_yellow"
 				>

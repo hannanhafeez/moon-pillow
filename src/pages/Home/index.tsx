@@ -27,7 +27,7 @@ const Home = () => {
 			<div className="self-stretch px-4">
 				<div className="flex items-center px-3 py-1 bg-secondary_dark rounded-lg">
 					<div className="h-8 w-8 grid place-content-center p-[1px]">
-						<WifiSvg/>
+						<WifiSvg className="w-5 h-5 fill-current text-primary_yellow"/>
 					</div>
 
 					<div className="mx-2 flex-1">
@@ -82,7 +82,7 @@ const Home = () => {
 				</button>
 			</div>
 
-			{/* <div className="self-stretch min-h-[100px]" /> */}
+			<div className="self-stretch flex-1" />
 
 			<div className={
 					"w-full bg-black sticky bottom-0 p-4 grid grid-cols-2 divide-x divide-gray-500 " +
