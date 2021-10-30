@@ -3,10 +3,10 @@ import BgImg from '../../../assets/img/intro-bg.png'
 import LogoImg from '../../../assets/img/Logo@2x.png'
 
 import { useHistory } from 'react-router'
+import { Link } from 'react-router-dom'
 
 const LandingWifi = () => {
 	const history = useHistory()
-	const onClick = () => history.push('/wifi-pw')
 
 	return (
 		<>
@@ -37,13 +37,12 @@ const LandingWifi = () => {
 					</div>
 					
 					<div className="h-2/6 p-4 flex flex-col gap-4 justify-center items-center">
-						<a href="#" className="flex justify-center items-center">
+						<Link to="/legal" className="flex justify-center items-center">
 							<LegalSvg className="mx-2" />
 							<span className="text-14 text-primary_yellow font-medium tracking-wider">
 								Legal and Safety
 							</span>
-						</a>
-
+						</Link>
 
 						<p className="text-[#ffffffcc] text-[13px] text-center">
 							Disclaimer: This is a novelty item. Bybit is not responsible for any errors or omissions, or for the results obtained from the use of the Bybit Moon Pillow which is provided on an 'as is' basis without warranty or guarantee of any kind. Bybit disclaims all warranties, express, implied or statutory, with respect to the Bybit Moon Pillow.

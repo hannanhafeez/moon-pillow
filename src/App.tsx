@@ -14,6 +14,7 @@ import TestVibration from "./pages/TestVibration";
 import VibrationSuccess from "./pages/VibrationSuccess";
 import MonitoringMode from "./pages/MonitoringMode";
 import LegalAndSafety from "./pages/LegalAndSafety";
+import ConnectingWifi from "./pages/WifiSetup/ConnectingWifi";
 
 function App() {
 	return (
@@ -64,6 +65,9 @@ function App() {
 						</Route>
 						<Route path="/wifi-manual">
 							<WifiManual />
+						</Route>
+						<Route path="/wifi-connecting">
+							<ConnectingWifi />
 						</Route>
 						
 						<Route path="/edit">
