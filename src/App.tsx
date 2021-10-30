@@ -10,6 +10,10 @@ import WifiPassword from "./pages/WifiSetup/WifiPassword";
 import WifiManual from "./pages/WifiSetup/WifiManual";
 import ConnectWifi from "./pages/WifiSetup/ConnectWifi";
 import LandingWifi from "./pages/WifiSetup/LandingWifi";
+import TestVibration from "./pages/TestVibration";
+import VibrationSuccess from "./pages/VibrationSuccess";
+import MonitoringMode from "./pages/MonitoringMode";
+import LegalAndSafety from "./pages/LegalAndSafety";
 
 function App() {
 	return (
@@ -28,6 +32,23 @@ function App() {
 						<Route path="/users">
 							<Users />
 						</Route> */}
+						<Route path="/monitoring-mode">
+							<MonitoringMode />
+						</Route>
+						
+						<Route path="/vibration">
+							<TestVibration />
+						</Route>
+						<Route path="/vibration-success">
+							<VibrationSuccess />
+						</Route>
+						
+						<Route path="/legal">
+							<LegalAndSafety />
+						</Route>
+
+
+
 						<Route path="/landing">
 							<LandingWifi />
 						</Route>

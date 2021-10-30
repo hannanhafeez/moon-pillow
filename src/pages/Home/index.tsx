@@ -34,7 +34,7 @@ const Home = () => {
 						<h4 className="text-white font-bold text-base">{'Wifi Name'}</h4>
 					</div>
 
-					<button className="flex items-center gap-2 py-3">
+					<button className="flex items-center gap-2 py-3" onClick={() => history.push('/wifi')}>
 						<EditSvg />
 						<span className="text-primary_yellow font-medium text-14">Edit</span>
 					</button>
@@ -89,15 +89,15 @@ const Home = () => {
 					"text-center text-14 text-primary_yellow font-medium tracking-wider"
 				}
 			>
-				<a href="/edit" className="flex justify-center items-center">
+				<Link to="/vibration" className="flex justify-center items-center">
 					<VirationSvg className="mx-2"/>
 					Test vibration
-				</a>
+				</Link>
 				
-				<a href="#" className="flex justify-center items-center">
+				<Link to="/legal" className="flex justify-center items-center">
 					<LegalSvg className="mx-2" />
 					Legal and Safety
-				</a>
+				</Link>
 			</div>
 
 		</>

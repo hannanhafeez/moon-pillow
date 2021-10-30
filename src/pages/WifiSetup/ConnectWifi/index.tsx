@@ -6,8 +6,7 @@ import { useHistory } from 'react-router'
 
 const ConnectWifi = () => {
 	const history = useHistory()
-	const onClick = () => history.push('/wifi-pw')
-
+	
 	return (
 		<>
 
