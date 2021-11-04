@@ -23,7 +23,8 @@ function App() {
 				
 				<div className={
 					"w-full h-full max-w-768 min-h-full max-h-screen flex-1 flex flex-col items-center " + 
-					"to-black font-sans"
+					"to-black font-sans" +
+					" py-[30px]"
 					}
 				>
 					<Switch>

@@ -5,6 +5,7 @@ export type CoinListItemProps = {
 	alias: string; 
 	name: string;
 	picture?: string;
+	disabled?: boolean;
 	is3Percent?: boolean;
 	is5Percent?: boolean;
 	isTypeEdit?: boolean;		// Tells if the right button is edit button or add button
@@ -14,7 +15,7 @@ export type CoinListItemProps = {
 
 const CoinListItem : React.FC<CoinListItemProps> = (props) => {
 	const {
-		alias, name, 
+		alias, name, disabled=false,
 		is3Percent, is5Percent, picture, 
 		isTypeEdit = false, isEditable=true,
 		onButtonPressed 
@@ -37,8 +38,8 @@ const CoinListItem : React.FC<CoinListItemProps> = (props) => {
 			{
 				isEditable && 
 				<button className="flex items-center gap-2 py-3" onClick={onButtonPressed}>
-					{isTypeEdit ? <EditImg/> : <AddImg />}
-					<span className="text-primary_yellow font-medium text-14">{isTypeEdit? 'Edit' : 'Add'}</span>
+					  {isTypeEdit ? <EditImg className={svgStyle(disabled)} /> : <AddImg className={svgStyle(disabled)}/>}
+					  <span className={`${disabled ? 'text-gray-600' : 'text-primary_yellow'} font-medium text-14`}>{isTypeEdit? 'Edit' : 'Add'}</span>
 				</button>
 			}
 		</div>
@@ -46,3 +47,5 @@ const CoinListItem : React.FC<CoinListItemProps> = (props) => {
 }
 
 export default CoinListItem
+
+const svgStyle = (disabled?: boolean) => `fill-current ${disabled ? 'text-gray-600' : 'text-primary_yellow'}`

@@ -54,7 +54,7 @@ const EditWatchlist = () => {
 					<div className="grid grid-flow-row gap-2">
 						{
 							coins.map((item, ind) => (
-								<CoinListItem key={`${item.alias}-${ind}`}
+								<CoinListItem key={`${item.alias}-${ind}`} disabled
 									{...item} onButtonPressed={openModal}
 								/>
 							))

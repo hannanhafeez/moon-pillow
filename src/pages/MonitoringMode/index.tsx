@@ -2,6 +2,7 @@ import { ReactComponent as BackSvg } from '../../assets/svg/chevron-left.svg'
 import { ReactComponent as MonitoringSvg } from '../../assets/svg/monitoring-mode-graphic.svg'
 
 import { useHistory } from 'react-router'
+import Header from '../../components/Header'
 
 const MonitoringMode = () => {
 	const history = useHistory()
@@ -9,14 +10,7 @@ const MonitoringMode = () => {
 	return (
 		<>
 			{/* Header */}
-			<div className="self-stretch px-4">
-				<button className="py-4 grid grid-flow-col justify-start items-center gap-1" onClick={() => history.replace('/')}>
-					<BackSvg />
-					<p className="text-primary_yellow text-center text-14 font-medium uppercase tracking-widest">
-						Back
-					</p>
-				</button>
-			</div>
+			<Header/>
 
 			<div className="self-stretch w-full h-full relative overflow-hidden">
 				

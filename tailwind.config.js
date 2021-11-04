@@ -18,7 +18,7 @@ module.exports = {
       ...defaultTheme.screens,
     },
     fontFamily: {
-      sans: ['D-DIN-PRO', 'sans-serif', 'system-ui']
+      sans: ['DINPro', 'sans-serif', 'system-ui']
     },
     extend: {
       "height": {
