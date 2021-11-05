@@ -11,7 +11,7 @@ const CoinListHeader: React.FC<CoinListHeaderProps> = ({
 	return (
 		<div className="flex items-center bg-secondary_dark rounded-lg">
 			<div className="p-[1px]">
-				<img src={picture}
+				<img src={picture} alt={name}
 					className="h-10 w-10 rounded-full overflow-hidden "
 				/>
 			</div>

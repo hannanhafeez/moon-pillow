@@ -45,9 +45,19 @@
     ]
   },
   "devDependencies": {
+    "@svgr/webpack": "^5.5.0",
     "@types/react-router-dom": "^5.3.1",
     "autoprefixer": "^9",
+    "css-loader": "^6.5.1",
+    "envify": "^4.1.0",
+    "html-webpack-plugin": "^5.5.0",
+    "html-webpack-short-hash-plugin": "^1.0.0",
+    "path": "^0.12.7",
     "postcss": "^7",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "react-svg-loader": "^3.0.3",
+    "style-loader": "^3.3.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "terser": "^5.9.0",
+    "uglifyify": "^5.0.2"
   }
 }

@@ -13,7 +13,7 @@ const ConnectingWifi = () => {
 	
 	React.useEffect(()=>{
 		const id = setTimeout(()=> setConnected(true), 3000)
-		// return () => clearTimeout(id)
+		return () => clearTimeout(id)
 	},[])
 
 	return (

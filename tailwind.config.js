@@ -3,7 +3,7 @@ const {numbers} = require('./src/constants/styles');
 const colors = require('./src/constants/colors');
 
 module.exports = {
-  mode: 'jit',
+  // mode: 'jit',
   purge: [
     './src/**/*.{js,jsx,ts,tsx}', 
     './src/pages/**/*.{js,ts,jsx,tsx}', 

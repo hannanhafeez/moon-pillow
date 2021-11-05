@@ -11,7 +11,7 @@ const LandingWifi = () => {
 	return (
 		<>
 			<div className="self-stretch max-w-full max-h-full relative overflow-hidden">
-				<img src={BgImg} className="w-full opacity-50 bg-cover"/>
+				<img alt="bg" src={BgImg} className="w-full opacity-50 bg-cover"/>
 				
 				<div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-stretch">
 

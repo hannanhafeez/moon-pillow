@@ -3,7 +3,6 @@ import {ReactComponent as BackSvg} from '../../../assets/svg/chevron-left.svg'
 
 
 import { useHistory } from 'react-router'
-import Alert from '../../../components/Alert'
 
 const SelectWifi = () => {
 	const history = useHistory()

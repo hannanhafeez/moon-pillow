@@ -6,7 +6,6 @@ import { useHistory } from 'react-router'
 
 const TestVibration = () => {
 	const history = useHistory()
-	const onClick = () => history.push('/wifi-pw')
 
 	return (
 		<>

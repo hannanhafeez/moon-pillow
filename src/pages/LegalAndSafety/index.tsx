@@ -1,11 +1,8 @@
 import { ReactComponent as PdfSvg } from '../../assets/svg/pdf.svg'
 
-
-import { useHistory } from 'react-router'
 import Header from '../../components/Header'
 
 const LegalAndSafety = () => {
-	const history = useHistory()
 	
 	const list = [
 		{ name: "Instructions",},

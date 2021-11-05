@@ -1,4 +1,3 @@
-import { ReactComponent as BackSvg } from '../../assets/svg/chevron-left.svg'
 import { ReactComponent as MonitoringSvg } from '../../assets/svg/monitoring-mode-graphic.svg'
 
 import { useHistory } from 'react-router'

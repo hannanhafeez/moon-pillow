@@ -1,4 +1,3 @@
-import { ReactComponent as WifiSvg } from '../../../assets/svg/wifi.svg'
 import {ReactComponent as BackSvg} from '../../../assets/svg/chevron-left.svg'
 import { useHistory } from 'react-router'
 

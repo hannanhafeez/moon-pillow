@@ -1,7 +1,7 @@
 import { Link, useHistory } from 'react-router-dom'
 
 import LogoImg from '../../assets/img/Logo@2x.png'
-import CoinListItem, { CoinListItemProps } from '../../components/CoinListItem'
+import CoinListItem from '../../components/CoinListItem'
 
 import {ReactComponent as VirationSvg} from '../../assets/svg/vibration.svg'
 import {ReactComponent as LegalSvg} from '../../assets/svg/legal.svg'
