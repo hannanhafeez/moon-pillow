@@ -1,5 +1,4 @@
 import { ReactComponent as LegalSvg } from '../../../assets/svg/legal.svg'
-import BgImg from '../../../assets/img/intro-bg.png'
 import LogoImg from '../../../assets/img/Logo@2x.png'
 
 import { useHistory } from 'react-router'
@@ -11,11 +10,11 @@ const LandingWifi = () => {
 	return (
 		<>
 			<div className="self-stretch max-w-full max-h-full relative overflow-hidden">
-				<img alt="bg" src={BgImg} className="w-full opacity-50 bg-cover"/>
+				<img alt="bg" src={'/img/bg.png'} className="w-full opacity-50 bg-cover"/>
 				
-				<div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-stretch">
+				<div className="absolute py-8 top-0 left-0 right-0 bottom-0 flex flex-col items-stretch overflow-y-scroll">
 
-					<div className="h-4/6 p-4 flex flex-col gap-4 justify-center items-center">
+					<div className="h-4/6 px-4 flex flex-col gap-4 justify-center items-center">
 						
 						<div className="flex flex-col gap-3 items-center">
 							<img src={LogoImg} width={136} alt="Logo" />
@@ -36,15 +35,15 @@ const LandingWifi = () => {
 
 					</div>
 					
-					<div className="h-2/6 p-4 flex flex-col gap-4 justify-center items-center">
+					<div className="min-h-2/6 pt-4 px-4 flex flex-col gap-4 justify-center items-center">
 						<Link to="/legal" className="flex justify-center items-center">
 							<LegalSvg className="mx-2" />
-							<span className="text-14 text-primary_yellow font-medium tracking-wider">
+							<span className="text-14 text-primary_yellow font-medium tracking-wide">
 								Legal and Safety
 							</span>
 						</Link>
 
-						<p className="text-[#ffffffcc] text-[13px] text-center">
+						<p className="text-gray-300 text-[13px] text-center">
 							Disclaimer: This is a novelty item. Bybit is not responsible for any errors or omissions, or for the results obtained from the use of the Bybit Moon Pillow which is provided on an 'as is' basis without warranty or guarantee of any kind. Bybit disclaims all warranties, express, implied or statutory, with respect to the Bybit Moon Pillow.
 						</p>
 					</div>

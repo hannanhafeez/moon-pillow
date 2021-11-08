@@ -3,7 +3,7 @@ const {numbers} = require('./src/constants/styles');
 const colors = require('./src/constants/colors');
 
 module.exports = {
-  // mode: 'jit',
+  mode: 'jit',
   purge: [
     './src/**/*.{js,jsx,ts,tsx}', 
     './src/pages/**/*.{js,ts,jsx,tsx}', 
@@ -33,6 +33,12 @@ module.exports = {
       "maxWidth":{
         ...numbers
       },
+      "padding":{
+        '30px': '30px',
+      },
+      "margin":{
+        '30px': '30px',
+      },
 
       height: {
         '0.25': '1px'
@@ -48,7 +54,9 @@ module.exports = {
         '18': '18px',
         '19': '19px',
         '20': '20px',
-        '24': '24px'
+        '24': '24px',
+        '28': '28px',
+        '30': '30px',
       },
       colors: colors,
       letterSpacing: {

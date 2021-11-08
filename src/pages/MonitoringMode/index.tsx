@@ -11,13 +11,16 @@ const MonitoringMode = () => {
 			{/* Header */}
 			<Header/>
 
-			<div className="self-stretch w-full h-full relative overflow-hidden">
+			<div className="self-stretch w-full h-full relative">
 				
-				<div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-stretch overflow-scroll">
+				<div className="flex flex-col items-stretch py-30px">
 
-					<div className="p-4 flex flex-col gap-2 justify-center items-center">
+					<div className="px-4 flex flex-col gap-2 justify-center items-center">
 						
-						<MonitoringSvg className="max-h-[60%] my-[-24px]"/>
+						<div className="overflow-visible">
+							<MonitoringSvg className="-my-10 overflow-visible"/>
+						</div>
+							
 
 						<h3 className="text-white text-center text-[28px] font-bold tracking-wide">
 							Switch to ”ON” mode

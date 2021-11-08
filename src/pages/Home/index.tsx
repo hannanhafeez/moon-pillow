@@ -35,7 +35,7 @@ const Home = () => {
 					</div>
 
 					<button className="flex items-center gap-2 py-3" onClick={() => history.push('/wifi')}>
-						<EditSvg />
+						<EditSvg className="fill-current text-primary_yellow"/>
 						<span className="text-primary_yellow font-medium text-14">Edit</span>
 					</button>
 					

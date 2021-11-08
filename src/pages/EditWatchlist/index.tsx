@@ -3,9 +3,11 @@ import { Dialog, Transition } from '@headlessui/react'
 import CoinListItem from '../../components/CoinListItem'
 
 import {ReactComponent as TrashSvg} from '../../assets/svg/trash.svg'
+import {ReactComponent as CancelSvg} from '../../assets/svg/cancel.svg'
 
 import PercentageCheckBox from '../../components/PercentageCheckBox'
 import CoinListHeader from '../../components/CoinListHeader'
+import Header from '../../components/Header'
 
 const EditWatchlist = () => {
 	const [isOpen, setIsOpen] = useState(false)
@@ -16,19 +18,20 @@ const EditWatchlist = () => {
 	
 	return (
 		<>
-			
+			<Header />
+
 			<div className="self-stretch">
-				<div className="self-stretch px-4 my-8 grid gap-1 text-white">
-					<h1 className="font-bold text-[28px] tracking-wide">Edit Watchlist</h1>
+				<div className="self-stretch my-30px px-4 grid gap-0 text-white">
+					<h1 className="font-bold text-28 tracking-wide">Edit Watchlist</h1>
 					<p className="text-gray-400">Choose up to a maximum of 3 crypto to add to your Watchlist.</p>
 				</div>
 				
-				<div className="self-stretch px-4 mb-4">
-					<h4 className="text-primary_yellow text-base mb-2 ">
+				<div className="self-stretch px-4 mb-30px">
+					<h4 className="text-primary_yellow text-base mb-4 ">
 						Watchlist:
 					</h4>
 
-					<div className="grid grid-flow-row gap-2">
+					<div className="grid grid-flow-row gap-4">
 						{
 							length === 0 
 							? 
@@ -46,12 +49,12 @@ const EditWatchlist = () => {
 
 				</div>
 
-				<div className="self-stretch px-4 my-4">
-					<h4 className="text-primary_yellow text-base mb-2 ">
+				<div className="self-stretch px-4 my-30px">
+					<h4 className="text-primary_yellow text-base mb-4 ">
 						Other crypto:
 					</h4>
 					
-					<div className="grid grid-flow-row gap-2">
+					<div className="grid grid-flow-row gap-4">
 						{
 							coins.map((item, ind) => (
 								<CoinListItem key={`${item.alias}-${ind}`} disabled
@@ -72,6 +75,7 @@ const EditWatchlist = () => {
 					onClose={closeModal}
 				>
 					<div className="min-h-screen px-4 text-center">
+						
 						<Transition.Child
 							as={Fragment}
 							enter="ease-out duration-300"
@@ -95,32 +99,32 @@ const EditWatchlist = () => {
 							leaveFrom="opacity-100 scale-100"
 							leaveTo="opacity-0 scale-95"
 						>
-							<div className="font-sans inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-modal_color shadow-xl rounded-2xl">
+							<div className="font-sans inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-modal_color shadow-xl rounded-md">
 								<Dialog.Title as="h3"
-									className="text-lg font-bold leading-6 text-white"
+									className="text-lg font-bold leading-6 text-white mt-1"
 								>
 									Select vibration trigger for:
 								</Dialog.Title>
 
-								<div className="self-stretch my-4">
+								<div className="self-stretch my-5">
 									<CoinListHeader alias="BTC" name="Bitcoin" picture="http://daisyui.com/tailwind-css-component-profile-2@56w.png" />
 								</div>
 
-								<div className="my-2">
+								<div className="my-5">
 									<p className="text-base text-white opacity-70">
 										Receive a notification when the price changes by a certain percentage.
 									</p>
 								</div>
 
-								<div className="grid gap-3">
+								<div className="grid gap-5">
 									{/* Checkbox 1 */}
-									<PercentageCheckBox is3Percent={false} />
+									<PercentageCheckBox name="for5" id="for5" is3Percent={false} />
 									
 									{/* Checkbox 2 */}
-									<PercentageCheckBox is3Percent />
+									<PercentageCheckBox name="for3" id="for3" is3Percent />
 								</div>
 
-								<div className="mt-4">
+								<div className="mt-5">
 
 									<button className={
 										"w-full p-4 font-medium text-base rounded-md bg-primary_yellow hover:bg-yellow-500"
@@ -132,10 +136,15 @@ const EditWatchlist = () => {
 
 								</div>
 
-								<div className="mt-6 grid place-content-center">
+								{/* <div className="mt-6 grid place-content-center">
 									<button className="flex justify-center items-center text-primary_yellow">
-										<TrashSvg className="mx-2" />
-										<span className="font-medium text-base tracking-wide">Remove from your Watchlist</span>
+										<TrashSvg className="mx-2 h-4 w-4" />
+										<span className="font-medium text-base leading-4">Remove from your Watchlist</span>
+									</button>
+								</div> */}
+								<div className="absolute top-3 right-3">
+									<button onClick={closeModal}>
+										<CancelSvg />
 									</button>
 								</div>
 							</div>

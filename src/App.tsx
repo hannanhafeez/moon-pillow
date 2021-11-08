@@ -15,6 +15,7 @@ import VibrationSuccess from "./pages/VibrationSuccess";
 import MonitoringMode from "./pages/MonitoringMode";
 import LegalAndSafety from "./pages/LegalAndSafety";
 import ConnectingWifi from "./pages/WifiSetup/ConnectingWifi";
+import Alert from "./components/Alert";
 
 function App() {
 	return (
@@ -24,7 +25,7 @@ function App() {
 				<div className={
 					"w-full h-full max-w-768 min-h-full max-h-screen flex-1 flex flex-col items-center " + 
 					"to-black font-sans" +
-					" py-[30px]"
+					" py-30px"
 					}
 				>
 					<Switch>
@@ -79,6 +80,20 @@ function App() {
 						</Route>
 					</Switch>
 					{/* <Home/> */}
+				
+					{/* <div className="self-stretch flex flex-col items-stretch sticky bottom-0 right-0 left-0">
+						<div className="px-4">
+							<Alert />
+						</div>
+
+						<div className="min-h-15px"/>
+						<div className="min-h-30px"/>
+						<div className="bg-primary_blue p-4 pb-8 ">
+							<button className="bg-primary_yellow py-2.5 px-8 rounded font-medium font-base float-right">
+								Save
+							</button>
+						</div>
+					</div> */}
 				</div>
 				
 			</div>

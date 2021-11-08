@@ -13,7 +13,7 @@ module.exports = {
 	output: {
 		chunkFilename: "[name].bundle.js",
 		filename: "[name].bundle.js",
-		assetModuleFilename: "[name].[contenthash][ext]",
+		assetModuleFilename: "[name].[ext]",
 		path: path.resolve(__dirname, 'dist'),
 		clean: true,
 	},

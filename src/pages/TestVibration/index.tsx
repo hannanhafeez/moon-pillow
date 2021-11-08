@@ -3,6 +3,7 @@ import { ReactComponent as RefreshSvg } from '../../assets/svg/refresh.svg'
 import { ReactComponent as VibrationSvg } from '../../assets/svg/vibration-graphic.svg'
 
 import { useHistory } from 'react-router'
+import Header from '../../components/Header'
 
 const TestVibration = () => {
 	const history = useHistory()
@@ -10,22 +11,15 @@ const TestVibration = () => {
 	return (
 		<>
 			{/* Header */}
-			<div className="self-stretch px-4">
-				<button className="py-4 grid grid-flow-col justify-start items-center gap-1" onClick={() => history.goBack()}>
-					<BackSvg />
-					<p className="text-primary_yellow text-center text-14 font-medium uppercase tracking-widest">
-						Back
-					</p>
-				</button>
-			</div>
+			<Header/>
 
-			<div className="self-stretch w-full h-full relative overflow-hidden">
+			<div className="self-stretch w-full h-full relative ">
 				
-				<div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-stretch">
+				<div className="flex flex-col items-stretch">
 
 					<div className="h-4/6 p-4 flex flex-col gap-2 justify-center items-center">
 						
-						<VibrationSvg className="my-[-20px]"/>
+						<VibrationSvg className="-my-16 overflow-visible"/>
 
 						<h3 className="text-white text-center text-[28px] font-bold tracking-wide">
 							Do you feel the Bybit Moon Pillow vibrating?
@@ -37,7 +31,7 @@ const TestVibration = () => {
 
 					</div>
 					
-					<div className="h-2/6 p-4 flex flex-col gap-4 justify-center items-center">
+					<div className="h-2/6 p-4 pb-30px flex flex-col gap-7 justify-center items-center">
 						<button onClick={() => history.push('/vibration-success')}
 							className="w-full p-3 font-medium text-base rounded-md text-black bg-primary_yellow hover:bg-yellow-400"
 						>

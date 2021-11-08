@@ -6,42 +6,36 @@ import { ReactComponent as WifiSvg } from '../../../assets/svg/wifi.svg'
 
 import { useHistory } from 'react-router'
 import { clearTimeout } from 'timers'
+import Header from '../../../components/Header'
 
 const ConnectingWifi = () => {
 	const history = useHistory()
 	const [isConnected, setConnected] = React.useState(false);
 	
 	React.useEffect(()=>{
-		const id = setTimeout(()=> setConnected(true), 3000)
-		return () => clearTimeout(id)
+		/* const id =  */setTimeout(()=> setConnected(true), 3000)
+		// return () => clearTimeout(id)
 	},[])
 
 	return (
 		<>
 			{/* Header */}
-			<div className="self-stretch px-4">
-				<button className="py-4 grid grid-flow-col justify-start items-center gap-1" onClick={() => history.replace('/')}>
-					<BackSvg />
-					<p className="text-primary_yellow text-center text-14 font-medium uppercase tracking-widest">
-						Back
-					</p>
-				</button>
-			</div>
+			<Header/>
 
-			<div className="self-stretch w-full h-full relative overflow-hidden">
+			<div className="self-stretch w-full h-full relative ">
 				
-				<div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-stretch overflow-scroll p-4">
+				<div className="flex flex-col items-stretch p-4">
 
 					{
 						isConnected ? 
 							<>
 								<div className="flex flex-col gap-2 justify-center items-center relative">
 
-									<ConnectingSvg className=" my-[-24px]" />
+									<ConnectingSvg className=" -my-16 overflow-visible" />
 
 									<div className="absolute flex flex-col items-center -mt-8">
 
-										<ConnectedCheckSvg />
+										<ConnectedCheckSvg className="overflow-visible" />
 
 										<div className="h-4"/>
 										
@@ -61,15 +55,15 @@ const ConnectingWifi = () => {
 
 								</div>
 								<button onClick={() => history.replace('/')}
-									className="w-full p-3 font-medium text-base rounded-md text-black bg-primary_yellow hover:bg-yellow-400 mt-4"
+									className="w-full p-3 mb-3 font-medium text-base rounded-md text-black bg-primary_yellow hover:bg-yellow-400 mt-4"
 								>
 									Back to home
 								</button>
 							</>
 						:
-							<div className="p-4 flex flex-col gap-2 justify-center items-center relative">
+							<div className="px-4 pb-30px flex flex-col gap-2 justify-center items-center relative">
 							
-								<ConnectingSvg className=" my-[-24px]"/>
+								<ConnectingSvg className="-my-16 overflow-visible"/>
 
 								<div className="absolute flex flex-col items-center">
 									<p className="text-white text-base opacity-80">
