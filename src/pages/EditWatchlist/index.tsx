@@ -8,8 +8,11 @@ import {ReactComponent as CancelSvg} from '../../assets/svg/cancel.svg'
 import PercentageCheckBox from '../../components/PercentageCheckBox'
 import CoinListHeader from '../../components/CoinListHeader'
 import Header from '../../components/Header'
+import YellowButton from '../../components/YellowButton'
+import { useHistory } from 'react-router'
 
 const EditWatchlist = () => {
+	const history = useHistory()
 	const [isOpen, setIsOpen] = useState(false)
 	const length = coins.length
 
@@ -18,15 +21,17 @@ const EditWatchlist = () => {
 	
 	return (
 		<>
-			<Header />
+			<Header onBackPressed={()=>history.goBack()}/>
 
-			<div className="self-stretch">
-				<div className="self-stretch my-30px px-4 grid gap-0 text-white">
+			<div className="self-stretch min-h-30px"/>
+
+			<div className="self-stretch flex flex-col gap-30px">
+				<div className="self-stretch px-4 grid gap-0 text-white">
 					<h1 className="font-bold text-28 tracking-wide">Edit Watchlist</h1>
-					<p className="text-gray-400">Choose up to a maximum of 3 crypto to add to your Watchlist.</p>
+					<p className="text-gray-400 font-base leading-5">Choose up to a maximum of 3 crypto to add to your Watchlist.</p>
 				</div>
 				
-				<div className="self-stretch px-4 mb-30px">
+				<div className="self-stretch px-4 ">
 					<h4 className="text-primary_yellow text-base mb-4 ">
 						Watchlist:
 					</h4>
@@ -49,7 +54,7 @@ const EditWatchlist = () => {
 
 				</div>
 
-				<div className="self-stretch px-4 my-30px">
+				<div className="self-stretch px-4">
 					<h4 className="text-primary_yellow text-base mb-4 ">
 						Other crypto:
 					</h4>
@@ -126,13 +131,9 @@ const EditWatchlist = () => {
 
 								<div className="mt-5">
 
-									<button className={
-										"w-full p-4 font-medium text-base rounded-md bg-primary_yellow hover:bg-yellow-500"
-									}
-										onClick={closeModal}
-									>
+									<YellowButton onClick={closeModal}>
 										Done
-									</button>
+									</YellowButton>
 
 								</div>
 

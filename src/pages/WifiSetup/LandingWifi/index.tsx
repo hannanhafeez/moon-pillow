@@ -3,20 +3,21 @@ import LogoImg from '../../../assets/img/Logo@2x.png'
 
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
+import YellowButton from '../../../components/YellowButton'
 
 const LandingWifi = () => {
 	const history = useHistory()
 
 	return (
 		<>
-			<div className="self-stretch max-w-full max-h-full relative overflow-hidden">
-				<img alt="bg" src={'/img/bg.png'} className="w-full opacity-50 bg-cover"/>
+			<div className="self-stretch w-full h-screen -my-30px relative overflow-hidden">
+				<img alt="bg" src={'/img/bg.png'} className="absolute w-full opacity-50 bg-contain"/>
 				
 				<div className="absolute py-8 top-0 left-0 right-0 bottom-0 flex flex-col items-stretch overflow-y-scroll">
 
-					<div className="h-4/6 px-4 flex flex-col gap-4 justify-center items-center">
+					<div className="h-4/6 px-4 flex flex-col gap-30px justify-center items-center">
 						
-						<div className="flex flex-col gap-3 items-center">
+						<div className="flex flex-col gap-30px items-center">
 							<img src={LogoImg} width={136} alt="Logo" />
 							<h3 className="text-primary_yellow text-center text-14 font-black uppercase tracking-widest">
 								Zzz to the moon!
@@ -27,18 +28,16 @@ const LandingWifi = () => {
 							Up all night worrying about your crypto? <br/> The Bybit Moon Pillow alerts you on market movements so you can sleep your way to the moon.
 						</p>
 
-						<button onClick={() => history.push('/connect-wifi')}
-							className="w-full p-3 font-medium text-base rounded-md text-black bg-primary_yellow hover:bg-yellow-400"
-						>
+						<YellowButton onClick={() => history.push('/connect-wifi')}>
 							Connect
-						</button>
+						</YellowButton>
 
 					</div>
 					
-					<div className="min-h-2/6 pt-4 px-4 flex flex-col gap-4 justify-center items-center">
+					<div className="min-h-2/6 pt-4 px-4 flex flex-col gap-5 justify-center items-center">
 						<Link to="/legal" className="flex justify-center items-center">
 							<LegalSvg className="mx-2" />
-							<span className="text-14 text-primary_yellow font-medium tracking-wide">
+							<span className="text-14 leading-3 text-primary_yellow font-medium tracking-wide">
 								Legal and Safety
 							</span>
 						</Link>

@@ -70,8 +70,8 @@ const Home = () => {
 						+ 
 						(
 							length===0 
-							? " bg-primary_yellow hover:bg-yellow-500"
-							: " text-white border border-white hover:opacity-70"
+							? " bg-primary_yellow focus:bg-primary_yellow_hover"
+							: " text-white border border-white focus:bg-primary_white_hover"
 						)
 					}
 					onClick={onEditPressed}
@@ -85,7 +85,7 @@ const Home = () => {
 			<div className="self-stretch flex-1" />
 
 			<div className={
-					"w-full bg-black sticky bottom-0 p-4 grid grid-cols-2 divide-x divide-gray-500 " +
+					"w-full bg-black sticky -bottom-8 p-4 grid grid-cols-2 divide-x divide-gray-500 " +
 					"text-center text-14 text-primary_yellow font-medium tracking-wider"
 				}
 			>

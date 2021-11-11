@@ -13,6 +13,10 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    transformOrigin: {
+      "0": "0%",
+    },
+    
     screens: {
       'xs': '475px',
       ...defaultTheme.screens,
@@ -21,10 +25,26 @@ module.exports = {
       sans: ['DINPro', 'sans-serif', 'system-ui']
     },
     extend: {
+      zIndex: {
+        "-1": "-1",
+      },
+      scale:{
+        "60": "0.6",
+        "65": "0.65",
+        "70": "0.7",
+        "120": "1.2",
+        "130": "1.3",
+        "135": "1.35",
+        "140": "1.4",
+        "145": "1.45",
+      },
       "height": {
         ...numbers
       },
       "minHeight":{
+        ...numbers
+      },
+      "maxHeight":{
         ...numbers
       },
       "minWidth":{
@@ -33,10 +53,16 @@ module.exports = {
       "maxWidth":{
         ...numbers
       },
+      "inset":{...numbers},
       "padding":{
         '30px': '30px',
+        '-30px': '-30px',
       },
       "margin":{
+        '30px': '30px',
+        '-30px': '-30px',
+      },
+      "gap":{
         '30px': '30px',
       },
 
@@ -64,10 +90,15 @@ module.exports = {
         normal: '0.2px',
         loose: '0.3px'
       },
+      outline: {
+        primary_yellow:  `1px solid ${colors.primary_yellow}`,
+      }
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      borderColor: ['responsive', 'hover', 'focus', 'focus-within'],
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),

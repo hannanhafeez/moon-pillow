@@ -4,6 +4,7 @@ import { ReactComponent as VibrationSvg } from '../../assets/svg/vibration-graph
 
 import { useHistory } from 'react-router'
 import Header from '../../components/Header'
+import YellowButton from '../../components/YellowButton'
 
 const TestVibration = () => {
 	const history = useHistory()
@@ -11,7 +12,7 @@ const TestVibration = () => {
 	return (
 		<>
 			{/* Header */}
-			<Header/>
+			<Header onBackPressed={() => history.goBack()}/>
 
 			<div className="self-stretch w-full h-full relative ">
 				
@@ -32,11 +33,9 @@ const TestVibration = () => {
 					</div>
 					
 					<div className="h-2/6 p-4 pb-30px flex flex-col gap-7 justify-center items-center">
-						<button onClick={() => history.push('/vibration-success')}
-							className="w-full p-3 font-medium text-base rounded-md text-black bg-primary_yellow hover:bg-yellow-400"
-						>
+						<YellowButton onClick={() => history.push('/vibration-success')}>
 							Yes
-						</button>
+						</YellowButton>
 
 						<a href="#" className="flex justify-center items-center">
 							<RefreshSvg className="mx-2" />

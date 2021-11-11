@@ -4,25 +4,82 @@
 @tailwind utilities;
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: black;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background-color: black;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
 }
 
 /* Tailwind CSS */
 
+	/* Input chech-box */
+	input:checked+div svg {
+		@apply block;
+	}
 
-input:checked+div svg {
-  @apply block;
+	/* Input (text, password) */
+	input:not([type='checkbox']):focus-within~label,
+	input:not([type='checkbox']):not(:placeholder-shown)~label {
+		@apply transform scale-65 -translate-y-3 text-gray-500;
+	}
+
+	input:not([type='checkbox']):focus-within~label {
+		@apply text-gray-500;
+	}
+	input:not([type='checkbox']),input:not([type='checkbox']):focus-within {
+		@apply transform translate-y-1.5;
+	}
+
+	/* Select */
+	select:active~label,
+	select:not(:placeholder-shown)~label {
+		@apply transform scale-65 -translate-y-3 text-gray-500;
+	}
+
+	select:active~label {
+		@apply text-gray-500;
+	}
+	select,select:active {
+		@apply transform translate-y-1.5;
+	}
+
+
+.rotating-wifi-bg{
+	transform: scale(1.25);
+	-webkit-animation: rotate-center 30s linear infinite both;
+	animation: rotate-center 30s linear infinite both;
+}
+
+@-webkit-keyframes rotate-center {
+	0% {
+		-webkit-transform: rotate(0);
+		transform: rotate(0);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes rotate-center {
+	0% {
+		-webkit-transform: rotate(0);
+		transform: rotate(0);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
 }
 
 /* Tailwind CSS */

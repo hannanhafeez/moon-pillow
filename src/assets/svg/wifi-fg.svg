@@ -1,0 +1,25 @@
+<svg width="521" height="521" viewBox="0 0 521 521" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<mask id="mask0_884_4857" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="185" y="209" width="149"
+		height="121">
+		<path
+			d="M259.805 209.1C232.212 209.1 206.642 217.867 185.691 232.745L197.826 248.527C215.375 236.289 236.73 229.1 259.805 229.1C282.881 229.1 304.236 236.289 321.784 248.527L333.92 232.745C312.969 217.867 287.398 209.1 259.805 209.1ZM259.805 242.433C239.853 242.433 221.314 248.636 206.003 259.204L218.191 274.985C230.088 267.057 244.38 262.433 259.805 262.433C275.231 262.433 289.522 267.057 301.42 274.985L313.607 259.204C298.297 248.636 279.758 242.433 259.805 242.433ZM259.805 275.766C247.521 275.766 236.056 279.417 226.42 285.662L238.555 301.495C244.763 297.835 252.029 295.766 259.805 295.766C267.581 295.766 274.847 297.835 281.055 301.495L293.191 285.662C283.554 279.417 272.09 275.766 259.805 275.766ZM259.805 309.1C255.16 309.1 250.777 310.255 246.889 312.277L259.805 329.1L272.722 312.277C268.834 310.255 264.451 309.1 259.805 309.1Z"
+			fill="black" />
+	</mask>
+	<g mask="url(#mask0_884_4857)">
+		<circle cx="260.691" cy="261.1" r="86" fill="url(#paint1_linear_884_4857)" />
+	</g>
+	
+	<defs>
+		<filter id="filter0_f_884_4857" x="0.190674" y="0.0996017" width="520" height="520" filterUnits="userSpaceOnUse"
+			color-interpolation-filters="sRGB">
+			<feFlood flood-opacity="0" result="BackgroundImageFix" />
+			<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+			<feGaussianBlur stdDeviation="50" result="effect1_foregroundBlur_884_4857" />
+		</filter>
+		<linearGradient id="paint1_linear_884_4857" x1="201.691" y1="219.1" x2="303.191" y2="323.1"
+			gradientUnits="userSpaceOnUse">
+			<stop stop-color="#00E8F7" />
+			<stop offset="1" stop-color="#9E76FF" stop-opacity="0" />
+		</linearGradient>
+	</defs>
+</svg>

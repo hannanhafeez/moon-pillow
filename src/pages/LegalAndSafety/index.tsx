@@ -1,9 +1,10 @@
+import { useHistory } from 'react-router'
 import { ReactComponent as PdfSvg } from '../../assets/svg/pdf.svg'
 
 import Header from '../../components/Header'
 
 const LegalAndSafety = () => {
-	
+	const history = useHistory()
 	const list = [
 		{ name: "Instructions",},
 		{ name: "Battery Safety Manual",},
@@ -15,7 +16,7 @@ const LegalAndSafety = () => {
 		<>
 
 			{/* Header */}
-			<Header/>
+			<Header onBackPressed={() => history.goBack()} />
 			
 			<div className="h-[30px]"/>
 

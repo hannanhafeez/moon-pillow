@@ -4,6 +4,7 @@ import { ReactComponent as CelebrationSvg } from '../../assets/svg/celebration.s
 
 import { useHistory } from 'react-router'
 import Header from '../../components/Header'
+import YellowButton from '../../components/YellowButton'
 
 const VibrationSuccess = () => {
 	const history = useHistory()
@@ -11,7 +12,7 @@ const VibrationSuccess = () => {
 	return (
 		<>
 			{/* Header */}
-			<Header/>
+			<Header onBackPressed={() => history.goBack()}/>
 
 			<div className="self-stretch w-full h-full relative">
 				
@@ -33,11 +34,9 @@ const VibrationSuccess = () => {
 					</div>
 					
 					<div className="h-2/6 p-4 pb-30px flex flex-col gap-4 justify-center items-center">
-						<button onClick={() => history.replace('/')}
-							className="w-full p-3 font-medium text-base rounded-md text-black bg-primary_yellow hover:bg-yellow-400"
-						>
+						<YellowButton onClick={() => history.replace('/')}>
 							Back to home
-						</button>
+						</YellowButton>
 					</div>
 					
 				</div>

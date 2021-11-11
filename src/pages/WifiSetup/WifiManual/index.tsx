@@ -1,5 +1,6 @@
-import {ReactComponent as BackSvg} from '../../../assets/svg/chevron-left.svg'
 import { useHistory } from 'react-router'
+import Header from '../../../components/Header'
+import MaterialInput from '../../../components/MaterialInput'
 
 const WifiManual = () => {
 	const history = useHistory()
@@ -8,55 +9,52 @@ const WifiManual = () => {
 		<>
 
 			{/* Header */}
-			<div className="self-stretch px-4">
-				<button className="py-4 grid grid-flow-col justify-start items-center gap-1" onClick={() => history.goBack()} >
-					<BackSvg />
-					<p className="text-primary_yellow text-center text-14 font-medium uppercase tracking-widest">
-						Back
-					</p>
-				</button>
-			</div>
-
-
-			<div className="self-stretch px-4 mb-4">
-				<h4 className="text-white text-[28px] font-bold mb-2 ">
-					Enter network information
-				</h4>
-				
-			</div>
+			<Header onBackPressed={() => history.goBack()}/>
 			
-			<div className="self-stretch flex flex-col items-stretch gap-4">
+			<div className="min-h-30px"/>
 
-				<div className="self-stretch px-4 rounded-lg">
-					<input type="text" placeholder="Network Name"
-						className="w-full p-3 font-medium text-base rounded-lg bg-secondary border-0 text-white placeholder-gray-500"
-					/>
+			<div className="px-4 pb-30px self-stretch flex flex-col items-stretch gap-30px">
+
+				<div className="self-stretch">
+					<h4 className="text-white text-28 font-bold ">
+						Enter network information
+					</h4>
+					
 				</div>
 				
-				<div className="self-stretch px-4 rounded-lg">
-					<select className="w-full p-3 font-medium text-base rounded-lg bg-secondary border-0 text-white placeholder-gray-500">
-						<option>None</option>
-						<option>WPA</option>
-						<option>WPA 2</option>
-					</select>
+				<div className="self-stretch flex flex-col items-stretch gap-30px">
+
+					<MaterialInput placeholder="Network Name" name="network-name" type="text" />
+
+					<MaterialInput placeholder="Username" name="username" type="text" />
+					
+					<div className="self-stretch relative p-3 rounded bg-secondary focus-within:outline-primary_yellow">
+						<select name="select-security" defaultValue={undefined} placeholder="Select Security"
+							className="block w-full p-0 font-medium text-base rounded bg-secondary border-0 text-white appearance-none outline-none border-none focus:ring-0 bg-transparent"
+							style={{width:'102%'}}
+						>
+							<option value="none">None</option>
+							<option value="WPA">WPA</option>
+							<option value="WPA2">WPA 2</option>
+						</select>
+						<label htmlFor="select-security" className="absolute top-3 font-medium text-gray-500 duration-300 origin-0">
+							Select Security
+						</label>
+					</div>
+					
+					<MaterialInput placeholder="Password" name="password" type="password"/>
+					
 				</div>
 				
-				<div className="self-stretch px-4 rounded-lg">
-					<input type="text" placeholder="Password"
-						className="w-full p-3 font-medium text-base rounded-lg bg-secondary border-0 text-white placeholder-gray-500"
-					/>
+				<div className="self-stretch ">
+					<button onClick={() => history.push('/wifi-connecting')}
+						className="w-full p-3 font-medium text-base rounded text-black bg-primary_yellow"
+					>
+						Connect
+					</button>
 				</div>
-				
+
 			</div>
-			
-			<div className="self-stretch px-4 py-2 my-6 rounded-lg">
-				<button onClick={() => history.push('/wifi-connecting')}
-					className="w-full p-3 font-medium text-base rounded-md text-gray-500 hover:text-black bg-secondary hover:bg-primary_yellow"
-				>
-					Connect
-				</button>
-			</div>
-			
 
 		</>
 	)

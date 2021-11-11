@@ -16,8 +16,8 @@ const PercentageCheckBox: React.FC<PercentageCheckBoxProps> = ({
 			<div className="bg-modal_color border-2 rounded border-transparent w-5 h-5 flex flex-shrink-0 justify-center items-center mr-2 ">
 				<Tick/>
 			</div>
-			<label htmlFor={id} className="select-none">
-				<span className="inline-block">
+			<label htmlFor={id} className="select-none w-full">
+				<span className="inline-block w-full">
 					<h4 className="text-primary_yellow text-base font-bold leading-[21px]">{`${(is3Percent? 3 : 5)}%`}</h4>
 					<p className="text-white leading-4 text-14">up or down
 						<span className="text-white opacity-70"> within the {is3Percent ? 'last 5 min':'last hour'}</span>

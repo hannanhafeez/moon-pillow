@@ -2,6 +2,7 @@ import { ReactComponent as MonitoringSvg } from '../../assets/svg/monitoring-mod
 
 import { useHistory } from 'react-router'
 import Header from '../../components/Header'
+import YellowButton from '../../components/YellowButton'
 
 const MonitoringMode = () => {
 	const history = useHistory()
@@ -9,7 +10,7 @@ const MonitoringMode = () => {
 	return (
 		<>
 			{/* Header */}
-			<Header/>
+			<Header onBackPressed={() => history.goBack()}/>
 
 			<div className="self-stretch w-full h-full relative">
 				
@@ -32,11 +33,9 @@ const MonitoringMode = () => {
 							beep in "ON" mode, and two beeps in "SETTINGS" mode.
 						</p>
 
-						<button onClick={() => history.replace('/')}
-							className="w-full p-3 font-medium text-base rounded-md text-black bg-primary_yellow hover:bg-yellow-400 mt-4"
-						>
+						<YellowButton onClick={() => history.replace('/')}>
 							Back to home
-						</button>
+						</YellowButton>
 					</div>
 					
 
