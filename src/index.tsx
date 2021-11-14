@@ -9,9 +9,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { queryClient } from "./services/QueryClient";
+import { QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from 'react-query/devtools'
+
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+		<QueryClientProvider client={queryClient}>
+      <App />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

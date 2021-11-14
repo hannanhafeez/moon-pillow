@@ -1,7 +1,7 @@
 import {
 	BrowserRouter as Router,
 	Switch,
-	Route,
+	Route, Redirect
 } from "react-router-dom";
 import Home from './pages/Home';
 import EditWatchlist from "./pages/EditWatchlist";
@@ -17,7 +17,24 @@ import LegalAndSafety from "./pages/LegalAndSafety";
 import ConnectingWifi from "./pages/WifiSetup/ConnectingWifi";
 import Alert from "./components/Alert";
 
+import { useWifiStatus } from "./hooks/useWifiStatus";
+import React from "react";
+
 function App() {
+	// console.log(WIFI_STATUS);
+	
+	const { data, error, isError, isLoading } = useWifiStatus()
+
+
+	const e = !!error
+
+	if (!error){
+		console.log({ e, connected: data?.connected, data, isError, isLoading});
+	}else{
+		console.log({ e, error, isError, isLoading});
+	}
+	
+
 	return (
 		<Router>
 			<div className="w-screen h-screen max-h-screen flex justify-center bg-gradient-to-b from-primary_blue overflow-scroll">
@@ -28,57 +45,71 @@ function App() {
 					" py-30px overflow-x-hidden"
 					}
 				>
-					<Switch>
+				{
+					(!data && !isLoading)
+					?<MonitoringMode/>
+					:<Switch >
+						<Route exact path="/">
+							{data?.connected ? <Home/> : <LandingWifi/>}
+						</Route>
 						{/* <Route path="/about">
 							<About />
 						</Route>
 						<Route path="/users">
 							<Users />
 						</Route> */}
-						<Route path="/monitoring-mode">
-							<MonitoringMode />
+					
+						<Route exact path="/monitoring-mode">
+							<RedirectComponent error={e} >
+								<MonitoringMode/>
+							</RedirectComponent>
 						</Route>
 						
-						<Route path="/vibration">
-							<TestVibration />
+						<Route exact path="/vibration">
+							<RedirectComponent error={e} >
+								<TestVibration/>
+							</RedirectComponent>
 						</Route>
-						<Route path="/vibration-success">
-							<VibrationSuccess />
+						<Route exact path="/vibration-success">
+							<RedirectComponent error={e} >
+								<VibrationSuccess/>
+							</RedirectComponent>
 						</Route>
 						
-						<Route path="/legal">
-							<LegalAndSafety />
+						<Route exact path="/legal">
+							<RedirectComponent error={e} >
+								<LegalAndSafety/>
+							</RedirectComponent>
 						</Route>
 
-
-
-						<Route path="/landing">
-							<LandingWifi />
+						<Route exact path="/edit">
+							<RedirectComponent error={e} >
+								<EditWatchlist/>
+							</RedirectComponent>
 						</Route>
-						<Route path="/connect-wifi">
+
+							
+					
+						<Route exact path="/connect-wifi">
 							<ConnectWifi />
 						</Route>
 
-						<Route path="/wifi">
+						<Route exact path="/wifi">
 							<SelectWifi />
 						</Route>
-						<Route path="/wifi-pw">
+						<Route exact path="/wifi-pw">
 							<WifiPassword />
 						</Route>
-						<Route path="/wifi-manual">
+						<Route exact path="/wifi-manual" >
 							<WifiManual />
 						</Route>
-						<Route path="/wifi-connecting">
+						<Route exact path="/wifi-connecting">
 							<ConnectingWifi />
 						</Route>
-						
-						<Route path="/edit">
-							<EditWatchlist />
-						</Route>
-						<Route path="/">
-							<Home />
-						</Route>
+	
 					</Switch>
+				}
+					
 					{/* <Home/> */}
 				
 					{/* <div className="self-stretch flex flex-col gap-4 items-stretch sticky -bottom-8 right-0 left-0">
@@ -99,5 +130,13 @@ function App() {
 		</Router>
 	);
 }
+
+const RedirectComponent: React.FC<{ error?: boolean }> = ({ error = false, children}) => (
+	<>
+	{
+		error ? <Redirect to='/'/> : <>{children}</>
+	}
+	</>
+)
 
 export default App;

@@ -5,10 +5,11 @@ export type MaterialInputProps = {
 const MaterialInput:React.FC<MaterialInputProps> = (props) => {
 	const {
 		name, placeholder,
+		...inputProps
 	} = props
 	return (
 		<div className="relative p-3 rounded bg-secondary focus-within:outline-primary_yellow">
-			<input {...props} placeholder=" "
+			<input {...inputProps} placeholder=" "
 				className="duration-300 text-white block p-0 w-full text-base appearance-none outline-none border-none focus:ring-0 bg-transparent"
 			/>
 			<label htmlFor={name} className="absolute top-3 font-medium text-gray-500 duration-300 origin-0">

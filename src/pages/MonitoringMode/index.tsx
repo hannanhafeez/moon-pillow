@@ -3,14 +3,19 @@ import { ReactComponent as MonitoringSvg } from '../../assets/svg/monitoring-mod
 import { useHistory } from 'react-router'
 import Header from '../../components/Header'
 import YellowButton from '../../components/YellowButton'
+import { useQueryClient } from 'react-query'
+import { WIFI_STATUS } from '../../services/ServiceUrl'
 
 const MonitoringMode = () => {
 	const history = useHistory()
+	const queryClient = useQueryClient()
+
+	const data: any = queryClient.getQueryData(WIFI_STATUS.name)
 	
 	return (
 		<>
 			{/* Header */}
-			<Header onBackPressed={() => history.goBack()}/>
+			{data && <Header onBackPressed={() => history.goBack()}/>}
 
 			<div className="self-stretch w-full h-full relative">
 				
@@ -33,9 +38,12 @@ const MonitoringMode = () => {
 							beep in "ON" mode, and two beeps in "SETTINGS" mode.
 						</p>
 
-						<YellowButton onClick={() => history.replace('/')}>
-							Back to home
-						</YellowButton>
+						{
+							// data &&
+							<YellowButton onClick={() => history.replace('/')}>
+								Back to home
+							</YellowButton>
+						}
 					</div>
 					
 

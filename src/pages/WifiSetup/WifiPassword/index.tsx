@@ -1,11 +1,55 @@
 import { ReactComponent as WifiSvg } from '../../../assets/svg/wifi.svg'
-import { useHistory } from 'react-router'
+import { useHistory, useLocation } from 'react-router'
 import Header from '../../../components/Header'
 
 import MaterialInput from '../../../components/MaterialInput'
+import React, { useCallback, useState } from 'react'
+import YellowButton from '../../../components/YellowButton'
+import { CONNECT_WIFI } from '../../../services/ServiceUrl'
+import { ErrorMessageState, useErrorMessage } from '../../../hooks/useErrorMessage'
+import Alert from '../../../components/Alert'
 
 const WifiPassword = () => {
 	const history = useHistory()
+	const location:any = useLocation()
+
+	const [pw, setPW] = useState('')
+	const { error, showMessageForTime}= useErrorMessage()
+
+	React.useEffect(()=>{
+		console.log(location.state);
+	},[])
+
+	const onTextChange = useCallback((e: React.ChangeEvent<HTMLInputElement>)=>{
+		e.preventDefault();
+		// console.log(e.target.value);
+		setPW(e.target.value)
+	},[])
+
+	const onClick = ()=>{
+		const data = { ssid: location?.state?.ssid, pass: pw }
+		console.log(data);
+		// return
+		const requestOptions: RequestInit = {
+			method: 'POST',
+			body: JSON.stringify(data)
+		};
+
+		fetch(CONNECT_WIFI.url, requestOptions)
+			.then(res=>res.text())
+			.then(res=>{
+				if(res === 'ok'){
+					history.push('/wifi-connecting',{ssid: location?.state?.ssid})
+				}else{
+					showMessageForTime('An unknow error occured!', 5000)
+				}
+			})
+			.catch((e)=>{
+				console.log(e);
+				
+				showMessageForTime("An error occured, please try again!", 10000)
+			})
+	}
 
 	return (
 		<>
@@ -17,6 +61,11 @@ const WifiPassword = () => {
 
 
 			<div className="self-stretch flex flex-col items-stretch gap-30px px-4">
+
+				{
+					(error as ErrorMessageState).shown && 
+					<Alert message={(error as ErrorMessageState).message} danger/>
+				}
 
 
 				<div className="self-stretch">
@@ -34,7 +83,7 @@ const WifiPassword = () => {
 						</div>
 						<div className="mx-2">
 							<h4 className="text-white font-bold text-base">
-								SGLinksys00043
+								{location?.state?.ssid ?? 'Wifi Name'}
 							</h4>
 						</div>
 					</div>
@@ -42,14 +91,14 @@ const WifiPassword = () => {
 
 				</div>
 
-				<MaterialInput type="password" placeholder="Password"/>
+				<MaterialInput maxLength={20} type="password" placeholder="Password" 
+					onChange={onTextChange}
+				/>
 				
 				<div className="self-stretch rounded">
-					<button onClick={() => history.push('/wifi-connecting')}
-						className="w-full p-3 font-medium text-base rounded-md text-gray-500 hover:text-black bg-secondary hover:bg-primary_yellow"
-					>
+					<YellowButton isDisabled={pw === ''} onClick={onClick}>
 						Connect
-					</button>
+					</YellowButton>
 				</div>
 
 			</div>

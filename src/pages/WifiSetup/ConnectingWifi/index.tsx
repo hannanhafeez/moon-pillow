@@ -4,24 +4,38 @@ import { ReactComponent as ConnectingSvg } from '../../../assets/svg/wifi-connec
 import { ReactComponent as ConnectedCheckSvg } from '../../../assets/svg/connected-check.svg'
 import { ReactComponent as WifiSvg } from '../../../assets/svg/wifi.svg'
 
-import { useHistory } from 'react-router'
-import { clearTimeout } from 'timers'
+import { useHistory, useLocation } from 'react-router'
 import Header from '../../../components/Header'
 import YellowButton from '../../../components/YellowButton'
+import { useQueryClient } from 'react-query'
+import { WIFI_STATUS } from '../../../services/ServiceUrl'
+import { responseType } from '../../../hooks/useWifiStatus'
 
 const ConnectingWifi = () => {
 	const history = useHistory()
+	const location: any = useLocation()
 	const [isConnected, setConnected] = React.useState(false);
+
+	const queryClient = useQueryClient()
+
+	const data: responseType = queryClient.getQueryData(WIFI_STATUS.name)
 	
 	React.useEffect(()=>{
-		/* const id =  */setTimeout(()=> setConnected(true), 3000)
+		// /* const id =  */setTimeout(()=> setConnected(true), 3000)
 		// return () => clearTimeout(id)
-	},[])
+		console.log(data);
+		
+		data?.connected && setConnected(true)
+	}, [data, data?.connected])
 
 	return (
 		<>
 			{/* Header */}
-			<Header onBackPressed={() => history.goBack()}/>
+			{	
+				
+				<Header onBackPressed={() => history.goBack()}/>
+				// <div className="min-h-18px"/>
+			}
 
 			<div className="self-stretch w-full h-full relative ">
 				
@@ -74,7 +88,7 @@ const ConnectingWifi = () => {
 											<WifiSvg className="w-5 h-5 fill-current text-primary_yellow" />
 										</div>
 
-										<h4 className="text-white font-bold text-base">{'SGLinksys00043'}</h4>
+										<h4 className="text-white font-bold text-base">{location?.state?.ssid ?? 'Wifi Name'}</h4>
 
 									</div>
 								</div>

@@ -7,9 +7,15 @@ import {ReactComponent as VirationSvg} from '../../assets/svg/vibration.svg'
 import {ReactComponent as LegalSvg} from '../../assets/svg/legal.svg'
 import {ReactComponent as WifiSvg} from '../../assets/svg/wifi.svg'
 import {ReactComponent as EditSvg} from '../../assets/svg/edit.svg'
+import { useQueryClient } from 'react-query'
+import { WIFI_STATUS } from '../../services/ServiceUrl'
 
 const Home = () => {
 	const history = useHistory();
+	const queryClient = useQueryClient()
+
+	const data:any = queryClient.getQueryData(WIFI_STATUS.name)
+	
 	const length = coins.length
 
 	const onEditPressed = () => history.push('/edit')
@@ -31,7 +37,9 @@ const Home = () => {
 					</div>
 
 					<div className="mx-2 flex-1">
-						<h4 className="text-white font-bold text-base">{'Wifi Name'}</h4>
+						<h4 className="text-white font-bold text-base">
+							{data?.ssid ?? 'Wifi Name'}
+						</h4>
 					</div>
 
 					<button className="flex items-center gap-2 py-3" onClick={() => history.push('/wifi')}>

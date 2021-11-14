@@ -4,10 +4,12 @@ import {ReactComponent as BackSvg} from '../../../assets/svg/chevron-left.svg'
 
 import { useHistory } from 'react-router'
 import Header from '../../../components/Header'
+import { useWifiList } from '../../../hooks/useWifiList'
 
 const SelectWifi = () => {
 	const history = useHistory()
-	const onClick = () => history.push('/wifi-pw')
+	const {data} = useWifiList()
+	const onClick = (ssid: string) => history.push('/wifi-pw',{ssid})
 
 	return (
 		<>
@@ -38,8 +40,8 @@ const SelectWifi = () => {
 			<div className="max-h-full overflow-y-scroll self-stretch flex flex-col items-stretch gap-3 px-4">
 				
 				{
-					wifiNames.map((name,ind)=>(
-						<WifiButton key={`${name}-${ind}`} name={name + ind} onPress={onClick}/>
+					(data as string[])?.map((name,ind)=>(
+						<WifiButton key={`${name}-${ind}`} name={name} onPress={()=>onClick(name)}/>
 					))
 				}
 
@@ -53,8 +55,6 @@ const SelectWifi = () => {
 					</div>
 				</button>
 			</div>
-			
-
 		</>
 	)
 }
