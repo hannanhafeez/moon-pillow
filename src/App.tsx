@@ -29,9 +29,9 @@ function App() {
 	const e = !!error
 
 	if (!error){
-		console.log({ e, connected: data?.connected, data, isError, isLoading});
+		console.log({ connected: data?.connected, data, e, isError, isLoading});
 	}else{
-		console.log({ e, error, isError, isLoading});
+		console.log({ error, e, isError, isLoading});
 	}
 	
 

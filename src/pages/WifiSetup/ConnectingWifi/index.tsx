@@ -32,9 +32,9 @@ const ConnectingWifi = () => {
 		<>
 			{/* Header */}
 			{	
-				
-				<Header onBackPressed={() => history.goBack()}/>
-				// <div className="min-h-18px"/>
+				!isConnected 
+				? <Header onBackPressed={() => history.goBack()}/>
+				: <div className="min-h-18px"/>
 			}
 
 			<div className="self-stretch w-full h-full relative ">
