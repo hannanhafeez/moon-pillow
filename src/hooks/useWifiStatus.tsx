@@ -8,12 +8,14 @@ export type responseType = {
 } | undefined
 
 export const useWifiStatus = () => {
-	const queryData = useQuery(WIFI_STATUS.name, (context) => {
-		return fetch(WIFI_STATUS.url).then(res => res.json())
-	},
+	const queryData = useQuery(WIFI_STATUS.name, () => {
+		return fetch(WIFI_STATUS.url)
+				.then(res => res.json())
+				.catch(rejected => console.log(rejected))
+		},
 		{
 			useErrorBoundary: true,
-			// retryDelay: 3000,
+			retryDelay: 5 * 1000,
 			refetchInterval: 5 * 1000
 		}
 	)

@@ -75,14 +75,20 @@ const SelectWifi = () => {
 			<div className="max-h-full overflow-y-scroll self-stretch flex flex-col items-stretch gap-3 px-4">
 				
 				{
+					wifiStatusData?.connected ? 
 					(data as string[])?.
-						filter((val)=>val!== wifiStatusData?.ssid).
+						filter((val)=> val !== wifiStatusData?.ssid).
+						map((name,ind)=>(
+							<WifiButton key={`${name}-${ind}`} name={name} onPress={()=>onClick(name)}/>
+						))
+					:
+					(data as string[])?.
 						map((name,ind)=>(
 							<WifiButton key={`${name}-${ind}`} name={name} onPress={()=>onClick(name)}/>
 						))
 				}
 
-				{/* <button className="flex items-center px-3 py-2 h-12 bg-secondary_dark hover:bg-secondary_light rounded-lg"
+				<button className="flex items-center px-3 py-2 h-12 bg-secondary_dark hover:bg-secondary_light rounded-lg"
 					onClick={()=>history.push('/wifi-manual')}
 				>
 					<div className="mx-2">
@@ -90,7 +96,7 @@ const SelectWifi = () => {
 							Join another Wi-Fi network
 						</h4>
 					</div>
-				</button> */}
+				</button>
 			</div>
 		</>
 	)

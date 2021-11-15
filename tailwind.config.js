@@ -92,6 +92,21 @@ module.exports = {
       },
       outline: {
         primary_yellow:  `1px solid ${colors.primary_yellow}`,
+      },
+      keyframes:{
+        'fade-in-down': {
+          '0%': {
+            opacity: '0',
+            transform: 'scale(0.6) translateY(-10px)'
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'scale(1) translateY(0)'
+          },
+        },
+      },
+      animation: {
+        'fade-in-down': 'fade-in-down 0.7s ease-out',
       }
     },
   },

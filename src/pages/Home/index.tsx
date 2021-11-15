@@ -1,22 +1,29 @@
 import { Link, useHistory } from 'react-router-dom'
 
 import LogoImg from '../../assets/img/Logo@2x.png'
-import CoinListItem from '../../components/CoinListItem'
+import CoinListItem, { CoinListItemProps } from '../../components/CoinListItem'
 
 import {ReactComponent as VirationSvg} from '../../assets/svg/vibration.svg'
 import {ReactComponent as LegalSvg} from '../../assets/svg/legal.svg'
 import {ReactComponent as WifiSvg} from '../../assets/svg/wifi.svg'
 import {ReactComponent as EditSvg} from '../../assets/svg/edit.svg'
-import { useQueryClient } from 'react-query'
-import { WIFI_STATUS } from '../../services/ServiceUrl'
+import { useQuery, useQueryClient } from 'react-query'
+import { GET_TRIGGERS, WIFI_STATUS } from '../../services/ServiceUrl'
+import { BooleanLiteral } from 'typescript'
+import { useSelectedCoins } from '../../hooks/useSelectedCoins'
+
 
 const Home = () => {
 	const history = useHistory();
 	const queryClient = useQueryClient()
 
 	const data:any = queryClient.getQueryData(WIFI_STATUS.name)
+
+	const {selectedCoins, selectedList} = useSelectedCoins()
+
+	console.log({ selectedCoins, selectedList});
 	
-	const length = coins.length
+	const length = selectedCoins.length
 
 	const onEditPressed = () => history.push('/edit')
 
@@ -61,9 +68,9 @@ const Home = () => {
 						? 
 						<p className="text-center mt-5 px-10 text-white">You have not added any crypto to your Watchlist.</p>
 						:
-						coins.slice(0,3).map((item, ind)=>(
+						selectedCoins.slice(0,3).map((item, ind)=>(
 							<CoinListItem key={`${item.alias}-${ind}`}  
-								{...item} isTypeEdit={true} is3Percent is5Percent
+								{...item} isTypeEdit={true}
 								isEditable={false}
 							/>
 						))
@@ -114,27 +121,24 @@ const Home = () => {
 
 export default Home
 
-// const coins: CoinListItemProps[] = []
+const coins: CoinListItemProps[] = []
 
-const coins = [
+/* const coins = [
 	{
 		name: 'Ethereum',
-		alias: 'ETH',
-		picture: 'http://daisyui.com/tailwind-css-component-profile-2@56w.png'
+		alias: 'ETH'
 	},
 	{
 		name: 'BitDAO',
-		alias: 'BIT',
-		picture: 'http://daisyui.com/tailwind-css-component-profile-2@56w.png'
+		alias: 'BIT'
 	},
 	{
 		name: 'Cardano',
-		alias: 'ADA',
-		picture: 'http://daisyui.com/tailwind-css-component-profile-2@56w.png'
+		alias: 'ADA'
 	},
 	{
 		name: 'Binance Coin',
-		alias: 'BNB',
-		picture: 'http://daisyui.com/tailwind-css-component-profile-2@56w.png'
+		alias: 'BNB'
 	},
 ]
+ */

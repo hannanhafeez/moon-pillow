@@ -44,13 +44,13 @@ const ConnectingWifi = () => {
 					{
 						isConnected ? 
 							<>
-								<div className="flex flex-col gap-2 justify-center items-center relative">
+								<div className="transition-all flex flex-col gap-2 justify-center items-center relative">
 
 									<ConnectingSvg className=" -my-16 overflow-visible" />
 
 									<div className="absolute flex flex-col items-center -mt-8">
 
-										<ConnectedCheckSvg className="overflow-visible" />
+										<ConnectedCheckSvg className="overflow-visible animate-fade-in-down" />
 
 										<div className="h-4"/>
 										
@@ -76,7 +76,7 @@ const ConnectingWifi = () => {
 						:
 							<div className="px-4 pb-30px flex flex-col gap-2 justify-center items-center relative">
 							
-								<ConnectingSvg className="-my-16 overflow-visible"/>
+								<ConnectingSvg className="-my-16 overflow-visible rotating-wifi-bg"/>
 
 								<div className="absolute flex flex-col items-center">
 									<p className="text-white text-base opacity-80">

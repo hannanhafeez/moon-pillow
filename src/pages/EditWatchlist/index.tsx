@@ -10,11 +10,31 @@ import CoinListHeader from '../../components/CoinListHeader'
 import Header from '../../components/Header'
 import YellowButton from '../../components/YellowButton'
 import { useHistory } from 'react-router'
+import { useQuery } from 'react-query'
+import { GET_COINS } from '../../services/ServiceUrl'
+import { useSelectedCoins } from '../../hooks/useSelectedCoins'
 
 const EditWatchlist = () => {
 	const history = useHistory()
 	const [isOpen, setIsOpen] = useState(false)
-	const length = coins.length
+
+	const { data:coinsList } = useQuery(GET_COINS.name, ()=>{
+			return fetch(GET_COINS.url)
+					.then(res=>res.json())
+					.catch(rejected=>console.log(rejected))
+		},
+		{
+			useErrorBoundary: true,
+			retryDelay: 5 * 1000,
+			refetchInterval: 15 * 1000
+		}
+	)
+	const { selectedCoins, selectedList } = useSelectedCoins()
+
+	const allCoins = (coinsList as {name: string, id: string}[])?.
+							map((coin)=>({name: coin.name, alias: coin.id}))
+
+	const length = allCoins?.length
 
 	const closeModal = ()=> setIsOpen(false)
 	const openModal = ()=> setIsOpen(true)
@@ -42,7 +62,7 @@ const EditWatchlist = () => {
 							? 
 							<p className="text-center mt-5 px-10 text-white">You have not added any crypto to your Watchlist.</p>
 							:
-							coins.slice(0,3).map((item, ind)=>(
+								selectedCoins?.map((item, ind)=>(
 								<CoinListItem key={`${item.alias}-${ind}`}  
 									{...item} isTypeEdit={true} is3Percent is5Percent
 									// isEditable={false} 
@@ -61,8 +81,10 @@ const EditWatchlist = () => {
 					
 					<div className="grid grid-flow-row gap-4">
 						{
-							coins.map((item, ind) => (
-								<CoinListItem key={`${item.alias}-${ind}`} disabled
+							allCoins
+								?.filter((coin) => !Object.keys(selectedList ?? {}).includes(coin.alias))
+								.map((item, ind) => (
+									<CoinListItem key={`${item.alias}-${ind}`} disabled={selectedCoins.length >=3}
 									{...item} onButtonPressed={openModal}
 								/>
 							))
