@@ -4,15 +4,19 @@ export type PercentageCheckBoxProps = {
 	is3Percent?: boolean,
 	defaultChecked?: boolean,
 	name?: string, id?:string,
+	onChange?:(currentVal:boolean)=>void
 }
 
 const PercentageCheckBox: React.FC<PercentageCheckBoxProps> = ({
 	is3Percent = true, defaultChecked=false,
-	name, id
+	name, id, onChange
 }) => {
 	return (
 		<div className="px-4 py-2.5 bg-secondary_light rounded-md flex items-center gap-2" >
-			<input type="checkbox" id={id} name={name} value="yes" className="opacity-0 absolute h-8 w-8" />
+			<input type="checkbox" id={id} name={name} value="yes" className="opacity-0 absolute h-8 w-8" 
+				defaultChecked={defaultChecked}
+				onChange={e =>onChange?.(e.target.checked)}
+			/>
 			<div className="bg-modal_color border-2 rounded border-transparent w-5 h-5 flex flex-shrink-0 justify-center items-center mr-2 ">
 				<Tick/>
 			</div>

@@ -1,9 +1,11 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import CoinListItem from '../../components/CoinListItem'
+import CoinListItem, { CoinListItemProps } from '../../components/CoinListItem'
 
 import {ReactComponent as TrashSvg} from '../../assets/svg/trash.svg'
 import {ReactComponent as CancelSvg} from '../../assets/svg/cancel.svg'
+import Alert from "../../components/Alert";
+
 
 import PercentageCheckBox from '../../components/PercentageCheckBox'
 import CoinListHeader from '../../components/CoinListHeader'
@@ -13,6 +15,7 @@ import { useHistory } from 'react-router'
 import { useQuery } from 'react-query'
 import { GET_COINS } from '../../services/ServiceUrl'
 import { useSelectedCoins } from '../../hooks/useSelectedCoins'
+import { CoinNamesObject, CoinShortName } from '../../hooks/hooks.d'
 
 const EditWatchlist = () => {
 	const history = useHistory()
@@ -33,11 +36,60 @@ const EditWatchlist = () => {
 	const { selectedCoins, selectedList } = useSelectedCoins()
 
 	const allCoins = (coinsList as {name: string, id: string}[])?.
-							map((coin)=>({name: coin.name, alias: coin.id}))
-
-	const selectedLength = selectedCoins?.length
+							map((coin)=>({name: coin.name, alias: coin.id} as CoinListItemProps))
 
 	const [selected, setSelected] = useState(selectedCoins);
+	
+	const selectedLength = selected?.length
+
+	const [selectedForModal, setSelectedForModal] = useState<undefined|CoinListItemProps>();
+
+	const selectItem = (item: CoinListItemProps)=>{
+		setSelectedForModal(item);
+		openModal()
+	}
+	
+	const addItem = (alias: CoinShortName) => {
+		const itemToAdd = { alias, name: CoinNamesObject[alias], is3Percent: false, is5Percent: false }
+		setSelectedForModal(itemToAdd);
+		setSelected(oldSelected=>([...oldSelected,itemToAdd]))
+		openModal();
+	}
+	const editItem = (editCheck: 3|5, editValue: boolean, alias: CoinShortName) => {
+		
+		setSelected(oldSelected=>{
+			return oldSelected.map(item=>{
+				return alias === item.alias 
+				? {
+					...item, 
+					is3Percent: editCheck === 3 ? editValue : item.is3Percent, 
+					is5Percent: editCheck === 5 ? editValue : item.is5Percent
+				} 
+				: item
+			})
+			// .filter(((item => (!(item.alias === alias && !(item.is3Percent || item.is5Percent))))))
+		})
+		setSelectedForModal(item => ({
+			...item!,
+			is3Percent: editCheck === 3 ? editValue : item!.is3Percent ?? false,
+			is5Percent: editCheck === 5 ? editValue : item!.is5Percent ?? false
+		}))
+
+		// setSelectedForModal(edited);
+		// openModal();
+	}
+	const removeItem = (alias: CoinShortName) => {
+		setSelected(oldSelected=>oldSelected.filter(item=>item.alias !== alias))
+		closeModal()
+	}
+
+	const onDonePressed = (alias: CoinShortName) =>{
+		setSelected(oldSelected => {
+			return oldSelected.filter(((item => (!(item.alias === alias && !(item.is3Percent || item.is5Percent))))))
+		})
+		closeModal()
+	}
+
 
 	const closeModal = ()=> setIsOpen(false)
 	const openModal = ()=> setIsOpen(true)
@@ -65,10 +117,10 @@ const EditWatchlist = () => {
 		
 						<div className="grid grid-flow-row gap-4">
 							{
-								selectedCoins?.map((item, ind)=>(
+								selected?.map((item, ind)=>(
 									<CoinListItem key={`${item.alias}-${ind}`}  
 										{...item} isTypeEdit={true}
-										onButtonPressed={openModal}
+										onButtonPressed={()=>selectItem(item)}
 									/>
 								))
 							}
@@ -88,10 +140,10 @@ const EditWatchlist = () => {
 					<div className="grid grid-flow-row gap-4">
 						{
 							allCoins
-								?.filter((coin) => !Object.keys(selectedList ?? {}).includes(coin.alias))
+								?.filter((coin) => !selected.some(i=>coin.alias===i.alias))
 								.map((item, ind) => (
 									<CoinListItem key={`${item.alias}-${ind}`} disabled={selectedLength >=3}
-									{...item} onButtonPressed={openModal}
+									{...item} onButtonPressed={()=>addItem(item.alias)}
 								/>
 							))
 						}
@@ -140,7 +192,9 @@ const EditWatchlist = () => {
 								</Dialog.Title>
 
 								<div className="self-stretch my-5">
-									<CoinListHeader alias="BTC" name="Bitcoin" picture="http://daisyui.com/tailwind-css-component-profile-2@56w.png" />
+									<CoinListHeader alias={selectedForModal?.alias} name={selectedForModal?.name} 
+										picture={`${window.location.origin}/img/${selectedForModal?.alias}.png`} 
+									/>
 								</div>
 
 								<div className="my-5">
@@ -151,26 +205,35 @@ const EditWatchlist = () => {
 
 								<div className="grid gap-5">
 									{/* Checkbox 1 */}
-									<PercentageCheckBox name="for5" id="for5" is3Percent={false} />
+									<PercentageCheckBox name="for5" id="for5" is3Percent={false} defaultChecked={selectedForModal?.is5Percent}
+										onChange={(val)=>{editItem(5, val ,selectedForModal!.alias)}}
+									/>
 									
 									{/* Checkbox 2 */}
-									<PercentageCheckBox name="for3" id="for3" is3Percent />
+									<PercentageCheckBox name="for3" id="for3" is3Percent={true} defaultChecked={selectedForModal?.is3Percent}
+										onChange={(val)=>{editItem(3, val ,selectedForModal!.alias)}}
+									/>
 								</div>
 
 								<div className="mt-5">
 
-									<YellowButton onClick={closeModal}>
+									<YellowButton onClick={()=>onDonePressed(selectedForModal!.alias)}>
 										Done
 									</YellowButton>
 
 								</div>
 
-								{/* <div className="mt-6 grid place-content-center">
-									<button className="flex justify-center items-center text-primary_yellow">
-										<TrashSvg className="mx-2 h-4 w-4" />
-										<span className="font-medium text-base leading-4">Remove from your Watchlist</span>
-									</button>
-								</div> */}
+								{
+									selectedCoins.some((val=> selectedForModal?.alias === val.alias)) && 
+									<div className="mt-6 grid place-content-center">
+										<button className="flex justify-center items-center text-primary_yellow" 
+											onClick={()=>removeItem(selectedForModal!.alias)}
+										>
+											<TrashSvg className="mx-2 h-4 w-4" />
+											<span className="font-medium text-base leading-4">Remove from your Watchlist</span>
+										</button>
+									</div>
+								}
 								<div className="absolute top-3 right-3">
 									<button onClick={closeModal}>
 										<CancelSvg />
@@ -182,7 +245,18 @@ const EditWatchlist = () => {
 				</Dialog>
 			</Transition>
 
+			<div className="self-stretch flex flex-col gap-4 items-stretch sticky bottom-0 right-0 left-0">
+				{/* <div className="px-4">
+					<Alert />
+				</div> */}
 
+
+				<div className="bg-primary_blue p-4 pb-8 -mb-8">
+					<button className="bg-primary_yellow py-2.5 px-8 rounded font-medium font-base float-right">
+						Save
+					</button>
+				</div>
+			</div>
 		</>
 	)
 }

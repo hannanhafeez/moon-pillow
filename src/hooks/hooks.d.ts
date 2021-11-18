@@ -1,6 +1,8 @@
-export type CoinName = "BTC" | "ETH" | "BIT" | "ADA" | "BNB" | "DOGE" | "DOT" | "LTC" | "SOL" | "XRP"
+export type CoinShortName = "BTC" | "ETH" | "BIT" | "ADA" | "BNB" | "DOGE" | "DOT" | "LTC" | "SOL" | "XRP"
 
-export const CoinNameObject = {
+export const CoinNamesObject:{
+	[key in CoinShortName]: string;
+} = {
 	"BTC": "Bitcion",
 	"ETH": "Ethereum",
 	"BIT": "BitDAO",

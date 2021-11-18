@@ -1,8 +1,9 @@
 import { ReactComponent as AddImg } from '../../assets/svg/add.svg'
 import { ReactComponent as EditImg } from '../../assets/svg/edit.svg'
+import { CoinShortName } from '../../hooks/hooks'
 
 export type CoinListItemProps = {
-	alias: string; 
+	alias: CoinShortName; 
 	name: string;
 	disabled?: boolean;
 	is3Percent?: boolean;
@@ -23,7 +24,7 @@ const CoinListItem : React.FC<CoinListItemProps> = (props) => {
 		<div className="flex items-center p-3 bg-secondary_dark rounded-lg">
 			<div className="h-10 w-10 grid place-content-center rounded-full overflow-hidden p-0.5">
 				<img className="w-full h-full rounded-full"
-					  src={`${window.location.origin}/img/${alias}.png`} alt="img"
+					  src={`${window.location.origin}/img/${alias}.png`} alt={`${alias}.png`}
 				/>
 			</div>
 

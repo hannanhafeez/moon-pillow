@@ -1,7 +1,7 @@
 import { useQuery } from "react-query"
 import { CoinListItemProps } from "../components/CoinListItem"
 import { GET_TRIGGERS, WIFI_STATUS } from "../services/ServiceUrl"
-import { CoinName, CoinNameObject } from "./hooks.d"
+import { CoinShortName, CoinNamesObject } from "./hooks.d"
 
 export type SelectedCoinsObject = {
 	[key: string]: {
@@ -25,10 +25,10 @@ export const useSelectedCoins = () => {
 
 	const selectedCoins:CoinListItemProps[] = Object.keys((selectedList as SelectedCoinsObject) ?? {}).map((coin) => {
 		return {
-			alias: coin, name: CoinNameObject[coin as CoinName],
+			alias: coin, name: CoinNamesObject[coin as CoinShortName],
 			is3Percent: (selectedList as SelectedCoinsObject)?.[coin].is3,
 			is5Percent: (selectedList as SelectedCoinsObject)?.[coin].is5,
-		}
+		} as CoinListItemProps
 	})
 
 	return {

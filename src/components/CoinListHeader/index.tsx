@@ -1,12 +1,12 @@
 
 export type CoinListHeaderProps = {
-	alias: string;
-	name: string;
+	alias?: string;
+	name?: string;
 	picture?: string;
 }
 
 const CoinListHeader: React.FC<CoinListHeaderProps> = ({
-	alias, name, picture
+	alias='BIT', name="Bit Coin", picture
 }) => {
 	return (
 		<div className="flex items-center bg-secondary_dark rounded-lg">
