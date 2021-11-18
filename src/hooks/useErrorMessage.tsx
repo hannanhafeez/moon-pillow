@@ -9,9 +9,9 @@ export const useErrorMessage = ()=> {
 
 	const resetMessage = () => setError({shown: false, message:''})
 
-	const showMessageForTime = (msg: string, miliSeconds: number) => {
+	const showMessageForTime = (msg: string, milliSeconds: number) => {
 		setError({shown: true, message: msg})
-		setTimeout(resetMessage, miliSeconds)
+		setTimeout(resetMessage, milliSeconds)
 	}
 
 	return {

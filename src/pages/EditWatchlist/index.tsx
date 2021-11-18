@@ -13,14 +13,17 @@ import CoinListHeader from '../../components/CoinListHeader'
 import Header from '../../components/Header'
 import YellowButton from '../../components/YellowButton'
 import { useHistory } from 'react-router'
-import { useQuery } from 'react-query'
-import { GET_COINS } from '../../services/ServiceUrl'
+import { useMutation, useQuery } from 'react-query'
+import { ADD_COINS, ADD_TRIGGERS, GET_COINS, GET_TRIGGERS } from '../../services/ServiceUrl'
 import { useSelectedCoins } from '../../hooks/useSelectedCoins'
 import { CoinNamesObject, CoinShortName } from '../../hooks/hooks.d'
+import { useErrorMessage } from '../../hooks/useErrorMessage'
+import { queryClient } from '../../services/QueryClient'
 
 const EditWatchlist = () => {
 	const history = useHistory()
 	const [isOpen, setIsOpen] = useState(false)
+	const {error, showMessageForTime} = useErrorMessage()
 	const { data:coinsList } = useQuery(GET_COINS.name, ()=>{
 			return fetch(GET_COINS.url)
 					.then(res=>res.json())
@@ -33,7 +36,40 @@ const EditWatchlist = () => {
 		}
 	)
 
-	const { selectedCoins, selectedList } = useSelectedCoins()
+	const coinMutation = useMutation((list: CoinListItemProps[])=> {
+		const myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+
+		const raw = JSON.stringify(list.reduce((acc, curr, ind)=>({...acc, [ind]: curr.alias}),{}));
+
+		const requestOptions = {
+			method: 'POST',
+			headers: myHeaders,
+			body: raw
+		};
+		return fetch(ADD_COINS.url, requestOptions).then(res => res.text())
+	})
+	
+	const triggerMutation = useMutation((list: CoinListItemProps[])=> {
+		const myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+
+		const raw = JSON.stringify(list.reduce((acc, curr, ind)=>(
+			{
+				...acc, 
+				[`T${ind}`]: (curr.is3Percent ? 1 : 0) + (curr.is5Percent ? 2 : 0)
+			}
+		),{}));
+
+		const requestOptions = {
+			method: 'POST',
+			headers: myHeaders,
+			body: raw
+		};
+		return fetch(ADD_TRIGGERS.url, requestOptions).then(res=>res.text())
+	})
+
+	const { selectedCoins, selectedList, refetch } = useSelectedCoins()
 
 	const allCoins = (coinsList as {name: string, id: string}[])?.
 							map((coin)=>({name: coin.name, alias: coin.id} as CoinListItemProps))
@@ -86,6 +122,31 @@ const EditWatchlist = () => {
 		})
 		closeModal()
 	}
+
+	const onSavePressed = async () => {
+		try{
+			const resCoins = await coinMutation.mutateAsync(selected);
+			const resTriggers = await triggerMutation.mutateAsync(selected);
+			const query = await refetch() 		// Refetch triggers
+			
+			const timeToShow = 15 * 1000 		// in milliseconds
+			const diff = differentName(selected, selectedCoins);
+			
+			if(selected.length > selectedCoins.length){
+				showMessageForTime(diff + ' added successfully!', timeToShow)
+			}else if(selected.length < selectedCoins.length){
+				showMessageForTime(diff + ' removed successfully!', timeToShow)
+			}else{
+				showMessageForTime('Triggers criteria updated successfully!', timeToShow)
+			}
+			console.log({ resCoins, resTriggers, queryData: query.data});
+		} catch (error) {
+			console.error(error)
+		} finally {
+			console.log('done')
+		}
+	}
+
 
 	const closeModal = ()=> setIsOpen(false)
 	const openModal = ()=> setIsOpen(true)
@@ -231,7 +292,7 @@ const EditWatchlist = () => {
 									</div>
 								}
 								<div className="absolute top-3 right-3">
-									<button onClick={closeModal}>
+									<button onClick={()=>onDonePressed(selectedForModal!.alias)}>
 										<CancelSvg />
 									</button>
 								</div>
@@ -241,22 +302,39 @@ const EditWatchlist = () => {
 				</Dialog>
 			</Transition>
 
-			{
-				!areArraysEqual(selectedCoins, selected) &&
-				<div className="self-stretch flex flex-col gap-4 items-stretch sticky bottom-0 right-0 left-0">
-					{/* <div className="px-4">
-						<Alert />
-					</div> */}
+			
+			<div className="self-stretch flex flex-col gap-4 items-stretch sticky bottom-0 right-0 left-0">
+				{	
+					error.shown &&	
+					<div className="px-4">
+						<Alert message={error.message} />
+					</div>
+				}
 
+				{
+					!areArraysEqual(selectedCoins, selected) &&
 					<div className="bg-primary_blue p-4 pb-8 -mb-8">
-						<YellowButton className="py-2.5 px-8 float-right w-auto">
+						<YellowButton className="py-2.5 px-8 float-right w-auto" onClick={onSavePressed}>
 							Save
 						</YellowButton>
 					</div>
-				</div>
-			}
+				}
+			</div>
+			
 		</>
 	)
+}
+
+const differentName = (a: CoinListItemProps[], b: CoinListItemProps[]) => {
+	const arr1 = a.map(i => i.alias)
+	const arr2 = b.map(i => i.alias)
+	const unique1 = arr1.filter((o) => arr2.indexOf(o) === -1);
+	const unique2 = arr2.filter((o) => arr1.indexOf(o) === -1);
+	const result = unique1.concat(unique2)
+	return result.reduce((prev, curr, ind)=> (ind === result.length-1) 
+														? ((prev === "" ? ("") : ( prev + " & ")) + curr) 
+														: ((prev === "" ? ("") : ( prev + ", ")) + curr)
+														, '')
 }
 
 export default EditWatchlist
