@@ -14,8 +14,10 @@ import TestVibration from "./pages/TestVibration";
 import VibrationSuccess from "./pages/VibrationSuccess";
 import MonitoringMode from "./pages/MonitoringMode";
 import LegalAndSafety from "./pages/LegalAndSafety";
+import Instructions from "./pages/Instructions";
+import Disclaimers from "./pages/Disclaimers";
 import ConnectingWifi from "./pages/WifiSetup/ConnectingWifi";
-import Alert from "./components/Alert";
+// import Alert from "./components/Alert";
 
 import { useWifiStatus } from "./hooks/useWifiStatus";
 import React from "react";
@@ -79,6 +81,18 @@ function App() {
 						<Route exact path="/legal">
 							<RedirectComponent error={e} >
 								<LegalAndSafety/>
+							</RedirectComponent>
+						</Route>
+						
+						<Route exact path="/instructions">
+							<RedirectComponent error={e} >
+								<Instructions/>
+							</RedirectComponent>
+						</Route>
+						
+						<Route exact path="/disclaimers">
+							<RedirectComponent error={e} >
+								<Disclaimers/>
 							</RedirectComponent>
 						</Route>
 

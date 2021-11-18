@@ -1,15 +1,13 @@
 import { useHistory } from 'react-router'
-import { ReactComponent as PdfSvg } from '../../assets/svg/pdf.svg'
+import RightArrow from '../../components/svg/RightArrow'
 
 import Header from '../../components/Header'
 
 const LegalAndSafety = () => {
 	const history = useHistory()
 	const list = [
-		{ name: "Instructions",},
-		{ name: "Battery Safety Manual",},
-		{ name: "Terms of Use",},
-		{ name: "Disclaimer",},
+		{ name: "Instructions", onClick: () => history.push('/instructions')},
+		{ name: "Product Warnings and Disclaimers", onClick: () => history.push('/disclaimers')},
 	]
 
 	return (
@@ -21,7 +19,7 @@ const LegalAndSafety = () => {
 			<div className="h-[30px]"/>
 
 			<div className="self-stretch px-4">
-				<h4 className="text-white text-[28px] leading-[28px] font-bold">
+				<h4 className="text-white text-28 leading-8 font-bold">
 					Legal and safety
 				</h4>
 				
@@ -32,18 +30,19 @@ const LegalAndSafety = () => {
 			<div className="max-h-full overflow-y-scroll self-stretch flex flex-col items-stretch gap-3 px-4">
 
 				{
-					list.map(({name}, ind)=>(
-						<button key={`${name}-${ind}`} className="flex items-center px-3 py-2 h-12 bg-secondary_dark hover:bg-secondary_light rounded-lg"
-							onClick={()=> undefined}
-						>	
-							<div className="h-8 w-8 grid place-content-center">
-								<PdfSvg className="h-5 w-5 fill-current text-primary_yellow " />
-							</div>
+					list.map(({name, onClick}, ind)=>(
+						<button key={`${name}-${ind}`} className="flex justify-between items-center px-3 py-3 min-h-12 bg-secondary_dark hover:bg-secondary_light rounded-lg"
+							onClick={onClick}
+						>
 
-							<div className="mx-2">
-								<h4 className="text-white font-bold text-base">
+							<div className="ml-1">
+								<h4 className="text-white text-left font-medium text-base">
 									{name}
 								</h4>
+							</div>
+							
+							<div className="h-8 w-8 -ml-2 -mr-2 grid place-content-center">
+								<RightArrow/>
 							</div>
 						</button>
 					))

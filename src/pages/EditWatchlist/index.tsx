@@ -5,6 +5,7 @@ import CoinListItem, { CoinListItemProps } from '../../components/CoinListItem'
 import {ReactComponent as TrashSvg} from '../../assets/svg/trash.svg'
 import {ReactComponent as CancelSvg} from '../../assets/svg/cancel.svg'
 import Alert from "../../components/Alert";
+import {areArraysEqual} from '../../utils/arrayEqualityCheck'
 
 
 import PercentageCheckBox from '../../components/PercentageCheckBox'
@@ -20,7 +21,6 @@ import { CoinNamesObject, CoinShortName } from '../../hooks/hooks.d'
 const EditWatchlist = () => {
 	const history = useHistory()
 	const [isOpen, setIsOpen] = useState(false)
-
 	const { data:coinsList } = useQuery(GET_COINS.name, ()=>{
 			return fetch(GET_COINS.url)
 					.then(res=>res.json())
@@ -67,17 +67,14 @@ const EditWatchlist = () => {
 				} 
 				: item
 			})
-			// .filter(((item => (!(item.alias === alias && !(item.is3Percent || item.is5Percent))))))
 		})
 		setSelectedForModal(item => ({
 			...item!,
 			is3Percent: editCheck === 3 ? editValue : item!.is3Percent ?? false,
 			is5Percent: editCheck === 5 ? editValue : item!.is5Percent ?? false
 		}))
-
-		// setSelectedForModal(edited);
-		// openModal();
 	}
+	
 	const removeItem = (alias: CoinShortName) => {
 		setSelected(oldSelected=>oldSelected.filter(item=>item.alias !== alias))
 		closeModal()
@@ -89,7 +86,6 @@ const EditWatchlist = () => {
 		})
 		closeModal()
 	}
-
 
 	const closeModal = ()=> setIsOpen(false)
 	const openModal = ()=> setIsOpen(true)
@@ -245,18 +241,20 @@ const EditWatchlist = () => {
 				</Dialog>
 			</Transition>
 
-			<div className="self-stretch flex flex-col gap-4 items-stretch sticky bottom-0 right-0 left-0">
-				{/* <div className="px-4">
-					<Alert />
-				</div> */}
+			{
+				!areArraysEqual(selectedCoins, selected) &&
+				<div className="self-stretch flex flex-col gap-4 items-stretch sticky bottom-0 right-0 left-0">
+					{/* <div className="px-4">
+						<Alert />
+					</div> */}
 
-
-				<div className="bg-primary_blue p-4 pb-8 -mb-8">
-					<button className="bg-primary_yellow py-2.5 px-8 rounded font-medium font-base float-right">
-						Save
-					</button>
+					<div className="bg-primary_blue p-4 pb-8 -mb-8">
+						<YellowButton className="py-2.5 px-8 float-right w-auto">
+							Save
+						</YellowButton>
+					</div>
 				</div>
-			</div>
+			}
 		</>
 	)
 }
@@ -264,26 +262,3 @@ const EditWatchlist = () => {
 export default EditWatchlist
 
 // const coins: CoinListItemProps[] = []
-
-const coins = [
-	{
-		name: 'Ethereum',
-		alias: 'ETH',
-		picture: 'http://daisyui.com/tailwind-css-component-profile-2@56w.png'
-	},
-	{
-		name: 'BitDAO',
-		alias: 'BIT',
-		picture: 'http://daisyui.com/tailwind-css-component-profile-2@56w.png'
-	},
-	{
-		name: 'Cardano',
-		alias: 'ADA',
-		picture: 'http://daisyui.com/tailwind-css-component-profile-2@56w.png'
-	},
-	{
-		name: 'Binance Coin',
-		alias: 'BNB',
-		picture: 'http://daisyui.com/tailwind-css-component-profile-2@56w.png'
-	},
-]
