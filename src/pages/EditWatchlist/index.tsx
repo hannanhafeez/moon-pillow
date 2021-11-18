@@ -29,12 +29,15 @@ const EditWatchlist = () => {
 			refetchInterval: 15 * 1000
 		}
 	)
+
 	const { selectedCoins, selectedList } = useSelectedCoins()
 
 	const allCoins = (coinsList as {name: string, id: string}[])?.
 							map((coin)=>({name: coin.name, alias: coin.id}))
 
-	const length = allCoins?.length
+	const selectedLength = selectedCoins?.length
+
+	const [selected, setSelected] = useState(selectedCoins);
 
 	const closeModal = ()=> setIsOpen(false)
 	const openModal = ()=> setIsOpen(true)
@@ -46,45 +49,48 @@ const EditWatchlist = () => {
 			<div className="self-stretch min-h-30px"/>
 
 			<div className="self-stretch flex flex-col gap-30px">
-				<div className="self-stretch px-4 grid gap-0 text-white">
-					<h1 className="font-bold text-28 tracking-wide">Edit Watchlist</h1>
+				<div className="self-stretch px-4 grid gap-2.5 text-white">
+					<h1 className="font-bold text-28 leading-7 tracking-wide">
+						{selectedLength !== 0 ? 'Edit Watchlist' : 'Select crypto to watch'}
+					</h1>
 					<p className="text-gray-400 font-base leading-5">Choose up to a maximum of 3 crypto to add to your Watchlist.</p>
 				</div>
 				
-				<div className="self-stretch px-4 ">
-					<h4 className="text-primary_yellow text-base mb-4 ">
-						Watchlist:
-					</h4>
-
-					<div className="grid grid-flow-row gap-4">
-						{
-							length === 0 
-							? 
-							<p className="text-center mt-5 px-10 text-white">You have not added any crypto to your Watchlist.</p>
-							:
+				{
+					(selectedLength !== 0) &&
+					<div className="self-stretch px-4">
+						<h4 className="text-primary_yellow text-base mb-4 ">
+							Watchlist:
+						</h4>
+		
+						<div className="grid grid-flow-row gap-4">
+							{
 								selectedCoins?.map((item, ind)=>(
-								<CoinListItem key={`${item.alias}-${ind}`}  
-									{...item} isTypeEdit={true} is3Percent is5Percent
-									// isEditable={false} 
-									onButtonPressed={openModal}
-								/>
-							))
-						}
-					</div>
+									<CoinListItem key={`${item.alias}-${ind}`}  
+										{...item} isTypeEdit={true}
+										onButtonPressed={openModal}
+									/>
+								))
+							}
+						</div>
 
-				</div>
+					</div>
+				}
 
 				<div className="self-stretch px-4">
-					<h4 className="text-primary_yellow text-base mb-4 ">
-						Other crypto:
-					</h4>
+					{
+						(selectedLength !== 0) &&
+						<h4 className="text-primary_yellow text-base mb-4 ">
+							Other crypto:
+						</h4>
+					}
 					
 					<div className="grid grid-flow-row gap-4">
 						{
 							allCoins
 								?.filter((coin) => !Object.keys(selectedList ?? {}).includes(coin.alias))
 								.map((item, ind) => (
-									<CoinListItem key={`${item.alias}-${ind}`} disabled={selectedCoins.length >=3}
+									<CoinListItem key={`${item.alias}-${ind}`} disabled={selectedLength >=3}
 									{...item} onButtonPressed={openModal}
 								/>
 							))

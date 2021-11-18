@@ -58,11 +58,11 @@ const Home = () => {
 			</div>
 			
 			<div className="self-stretch px-4 my-4">
-				<h4 className="text-primary_yellow text-base mb-2 ">
+				<h4 className="text-primary_yellow text-base mb-4 ">
 					Watchlist:
 				</h4>
 
-				<div className="grid grid-flow-row gap-2">
+				<div className="grid grid-flow-row gap-4">
 					{
 						length === 0 
 						? 
@@ -70,7 +70,7 @@ const Home = () => {
 						:
 						selectedCoins.slice(0,3).map((item, ind)=>(
 							<CoinListItem key={`${item.alias}-${ind}`}  
-								{...item} isTypeEdit={true}
+								{...item} isTypeEdit={true} 
 								isEditable={false}
 							/>
 						))
@@ -122,23 +122,3 @@ const Home = () => {
 export default Home
 
 const coins: CoinListItemProps[] = []
-
-/* const coins = [
-	{
-		name: 'Ethereum',
-		alias: 'ETH'
-	},
-	{
-		name: 'BitDAO',
-		alias: 'BIT'
-	},
-	{
-		name: 'Cardano',
-		alias: 'ADA'
-	},
-	{
-		name: 'Binance Coin',
-		alias: 'BNB'
-	},
-]
- */
