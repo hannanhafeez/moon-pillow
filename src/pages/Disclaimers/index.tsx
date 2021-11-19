@@ -38,7 +38,7 @@ const Disclaimers = () => {
 				<ol type="1" className="list-decimal flex flex-col gap-30px pr-4 pl-10">
 					{
 						data.map((para, ind)=>(
-							<li className="text-white font-base">
+							<li key={`${para.length}-${ind}`} className="text-white font-base">
 								{para}
 							</li>
 						))

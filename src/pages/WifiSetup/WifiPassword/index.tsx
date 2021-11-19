@@ -5,24 +5,41 @@ import Header from '../../../components/Header'
 import MaterialInput from '../../../components/MaterialInput'
 import React, { useCallback, useState } from 'react'
 import YellowButton from '../../../components/YellowButton'
-import { CONNECT_WIFI } from '../../../services/ServiceUrl'
+import { CONNECT_WIFI, WIFI_STATUS } from '../../../services/ServiceUrl'
 import { ErrorMessageState, useErrorMessage } from '../../../hooks/useErrorMessage'
 import Alert from '../../../components/Alert'
+import { useQueryClient } from 'react-query'
+import { responseType } from '../../../hooks/useWifiStatus'
 
 const WifiPassword = () => {
 	const history = useHistory()
 	const location:any = useLocation()
+	
+	const queryClient = useQueryClient()
+	
 
 	const [pw, setPW] = useState('')
-	const { error, showMessageForTime}= useErrorMessage()
+	const { error, showMessageForTime, resetMessage, setError}= useErrorMessage()
+	const data: responseType = queryClient.getQueryData(WIFI_STATUS.name)
 
 	React.useEffect(()=>{
 		console.log(location.state);
+		data?.connected && history.replace('/')
 	},[])
+
+	React.useEffect(()=>{
+		if(data?.reason === "" ){
+			resetMessage()
+		}else{
+			setError({message: data?.reason ?? "", shown: true})
+		}
+		data?.connected && history.replace('/')
+	}, [data, data?.reason])
 
 	const onTextChange = useCallback((e: React.ChangeEvent<HTMLInputElement>)=>{
 		e.preventDefault();
 		// console.log(e.target.value);
+		resetMessage()
 		setPW(e.target.value)
 	},[])
 

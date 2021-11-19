@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { ReactComponent as BackSvg } from '../../../assets/svg/chevron-left.svg'
 import { ReactComponent as ConnectingSvg } from '../../../assets/svg/wifi-connecting-graphic.svg'
 import { ReactComponent as ConnectedCheckSvg } from '../../../assets/svg/connected-check.svg'
@@ -19,14 +19,24 @@ const ConnectingWifi = () => {
 	const queryClient = useQueryClient()
 
 	const data: responseType = queryClient.getQueryData(WIFI_STATUS.name)
-	
+
+	React.useEffect(()=>{
+		setTimeout(()=>{
+			const res: responseType = queryClient.getQueryData(WIFI_STATUS.name);
+			if (res?.reason === "Authentication Failed - Invalid Password"){
+				history.goBack();
+			}
+		}, 10 * 1000)
+	},[])
+
+
 	React.useEffect(()=>{
 		// /* const id =  */setTimeout(()=> setConnected(true), 3000)
 		// return () => clearTimeout(id)
 		console.log(data);
-		
 		data?.connected && setConnected(true)
 	}, [data, data?.connected])
+
 
 	return (
 		<>
@@ -63,7 +73,7 @@ const ConnectingWifi = () => {
 												<WifiSvg className="w-5 h-5 fill-current text-primary_yellow" />
 											</div>
 
-											<h4 className="text-white font-bold text-base">{'SGLinksys00043'}</h4>
+											<h4 className="text-white font-bold text-base">{location?.state?.ssid ?? 'Wifi Name'}</h4>
 
 										</div>
 									</div>
@@ -102,6 +112,19 @@ const ConnectingWifi = () => {
 
 		</>
 	)
+}
+
+const useHasChanged = (val: any) => {
+	const prevVal = usePrevious(val)
+	return prevVal !== val
+}
+
+const usePrevious = (value: any) => {
+	const ref = useRef();
+	useEffect(() => {
+		ref.current = value;
+	});
+	return ref.current;
 }
 
 export default ConnectingWifi

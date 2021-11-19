@@ -1,6 +1,6 @@
 import { useQuery } from "react-query"
 import { CoinListItemProps } from "../components/CoinListItem"
-import { GET_TRIGGERS, WIFI_STATUS } from "../services/ServiceUrl"
+import { GET_TRIGGERS } from "../services/ServiceUrl"
 import { CoinShortName, CoinNamesObject } from "./hooks.d"
 
 export type SelectedCoinsObject = {

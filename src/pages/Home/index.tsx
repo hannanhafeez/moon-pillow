@@ -8,8 +8,7 @@ import {ReactComponent as LegalSvg} from '../../assets/svg/legal.svg'
 import {ReactComponent as WifiSvg} from '../../assets/svg/wifi.svg'
 import {ReactComponent as EditSvg} from '../../assets/svg/edit.svg'
 import { useQuery, useQueryClient } from 'react-query'
-import { GET_TRIGGERS, WIFI_STATUS } from '../../services/ServiceUrl'
-import { BooleanLiteral } from 'typescript'
+import { WIFI_STATUS } from '../../services/ServiceUrl'
 import { useSelectedCoins } from '../../hooks/useSelectedCoins'
 
 

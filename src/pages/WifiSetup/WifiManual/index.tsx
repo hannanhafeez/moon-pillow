@@ -1,9 +1,59 @@
-import { useHistory } from 'react-router'
+import { useCallback, useEffect, useState } from 'react'
+import { useHistory, useLocation } from 'react-router'
 import Header from '../../../components/Header'
 import MaterialInput from '../../../components/MaterialInput'
+import YellowButton from '../../../components/YellowButton'
+import { useErrorMessage } from '../../../hooks/useErrorMessage'
+import { CONNECT_WIFI } from '../../../services/ServiceUrl'
 
 const WifiManual = () => {
 	const history = useHistory()
+	const location: any = useLocation()
+
+	const [networkName, setNetworkName] = useState('')
+	const [pw, setPW] = useState('')
+	const { error, showMessageForTime } = useErrorMessage()
+
+	useEffect(() => {
+		console.log(location.state);
+	}, [])
+
+	const onNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+		e.preventDefault();
+		// console.log(e.target.value);
+		setNetworkName(e.target.value)
+	}, [])
+	const onPassChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+		e.preventDefault();
+		// console.log(e.target.value);
+		setPW(e.target.value)
+	}, [])
+	
+
+	const onClick = () => {
+		const data = { ssid: location?.state?.ssid, pass: pw }
+		console.log(data);
+		// return
+		const requestOptions: RequestInit = {
+			method: 'POST',
+			body: JSON.stringify(data)
+		};
+
+		fetch(CONNECT_WIFI.url, requestOptions)
+			.then(res => res.text())
+			.then(res => {
+				if (res === 'ok') {
+					history.push('/wifi-connecting', { ssid: networkName })
+				} else {
+					showMessageForTime('An unknow error occured!', 5000)
+				}
+			})
+			.catch((e) => {
+				console.log(e);
+
+				showMessageForTime("An error occured, please try again!", 10000)
+			})
+	}
 	
 	return (
 		<>
@@ -24,9 +74,11 @@ const WifiManual = () => {
 				
 				<div className="self-stretch flex flex-col items-stretch gap-30px">
 
-					<MaterialInput placeholder="Network Name" name="network-name" type="text" />
+					<MaterialInput maxLength={30} placeholder="Network Name" name="network-name" type="text"
+						onChange={onNameChange}
+					/>
 
-					<MaterialInput placeholder="Username" name="username" type="text" />
+					{/* <MaterialInput placeholder="Username" name="username" type="text" /> */}
 					
 					<div className="self-stretch relative p-3 rounded bg-secondary focus-within:outline-primary_yellow">
 						<select name="select-security" defaultValue={undefined} placeholder="Select Security"
@@ -42,16 +94,16 @@ const WifiManual = () => {
 						</label>
 					</div>
 					
-					<MaterialInput placeholder="Password" name="password" type="password"/>
+					<MaterialInput maxLength={20} type="password" placeholder="Password"
+						onChange={onPassChange}
+					/>
 					
 				</div>
 				
 				<div className="self-stretch ">
-					<button onClick={() => history.push('/wifi-connecting')}
-						className="w-full p-3 font-medium text-base rounded text-black bg-primary_yellow"
-					>
+					<YellowButton isDisabled={(networkName === "" || pw === '')} onClick={onClick}>
 						Connect
-					</button>
+					</YellowButton>
 				</div>
 
 			</div>

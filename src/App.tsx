@@ -21,11 +21,13 @@ import ConnectingWifi from "./pages/WifiSetup/ConnectingWifi";
 
 import { useWifiStatus } from "./hooks/useWifiStatus";
 import React from "react";
+import { useLandingStatus } from "./hooks/useLandingStatus";
 
 function App() {
 	// console.log(WIFI_STATUS);
 	
 	const { data, error, isError, isLoading } = useWifiStatus()
+	const { data: landingStatus } = useLandingStatus()
 
 
 	const e = !!error

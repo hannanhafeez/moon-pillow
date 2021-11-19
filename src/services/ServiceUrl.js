@@ -19,6 +19,10 @@ module.exports = {
 		url:baseUrl+'/coins',					//GET
 		name: "coins"
 	},               							
+	GET_LANDING_STATUS: {
+		url:baseUrl+'/getstatus',				//GET
+		name: "getstatus"
+	},               							
 	
 	ADD_TRIGGERS: {
 		url:baseUrl+'/addtriggers',				//POST
