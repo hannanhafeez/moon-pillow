@@ -10,6 +10,7 @@ import YellowButton from '../../../components/YellowButton'
 import { useQueryClient } from 'react-query'
 import { WIFI_STATUS } from '../../../services/ServiceUrl'
 import { responseType } from '../../../hooks/useWifiStatus'
+import { LandingStatus, useLandingStatus } from '../../../hooks/useLandingStatus'
 
 const ConnectingWifi = () => {
 	const history = useHistory()
@@ -19,6 +20,9 @@ const ConnectingWifi = () => {
 	const queryClient = useQueryClient()
 
 	const data: responseType = queryClient.getQueryData(WIFI_STATUS.name)
+	const landingStatus = useLandingStatus()
+
+	const landing = (landingStatus.data as LandingStatus).landing
 
 	React.useEffect(()=>{
 		setTimeout(()=>{
@@ -79,8 +83,15 @@ const ConnectingWifi = () => {
 									</div>
 
 								</div>
-								<YellowButton className="z-10" onClick={() => history.replace('/')}>
-									Back to home
+
+								{	!landing &&
+									<p className="text-center text-white text-base mb-8">
+										Next, let's test the vibration alert on your Bybit Moon Pillow.
+									</p>
+								}
+
+								<YellowButton className="z-10" onClick={() => history.replace(landing ? '/' : '/vibration')}>
+									{landing ? 'Back to home' : 'Continue'}
 								</YellowButton>
 							</>
 						:

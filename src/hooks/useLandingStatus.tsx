@@ -16,8 +16,8 @@ export const useLandingStatus = () => {
 	},
 		{
 			useErrorBoundary: true,
-			retryDelay: 5 * 1000,
-			refetchInterval: 5 * 1000
+			// retryDelay: 5 * 1000,
+			// refetchInterval: 5 * 1000
 		}
 	)
 

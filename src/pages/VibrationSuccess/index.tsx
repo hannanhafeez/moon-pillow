@@ -3,18 +3,51 @@ import { ReactComponent as CelebrationSvg } from '../../assets/svg/celebration.s
 
 import { useHistory } from 'react-router'
 import YellowButton from '../../components/YellowButton'
+import { useQueryClient } from 'react-query'
+import { GET_LANDING_STATUS } from '../../services/ServiceUrl'
+import { LandingStatus } from '../../hooks/useLandingStatus'
+import Header from '../../components/Header'
 
 const VibrationSuccess = () => {
 	const history = useHistory()
 
-	const isFirst = false;
+	const queryClient = useQueryClient();
+
+	const landingData = queryClient.getQueryData<LandingStatus | undefined>(GET_LANDING_STATUS.name);
+	const landing = landingData?.landing
+
+	const onDonePressed = () => {
+		const myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+
+		const raw = JSON.stringify({
+			"vibration": landingData?.vibration ? "true" : "false",
+			"landing": "true"
+		});
+
+		const requestOptions = {
+			method: 'POST',
+			headers: myHeaders,
+			body: raw
+		};
+
+		fetch("http://8.8.8.8/poststatus", requestOptions)
+			.then(response => response.text())
+			.then(r=>{
+				console.log(r);
+				return queryClient.fetchQuery(GET_LANDING_STATUS.name);
+			})
+			.catch(e=>console.log(e))
+			.finally(()=>history.replace('/'))
+	}
 	
 	return (
 		<>
 			{/* Header */}
 			{
-				// <Header onBackPressed={() => history.goBack()} />
-				<div className="self-stretch min-h-18px"/>
+				landing
+				? <Header onBackPressed={() => history.goBack()} />
+				: <div className="self-stretch min-h-18px"/>
 			}
 			<div className="self-stretch w-full h-full relative">
 				
@@ -23,24 +56,24 @@ const VibrationSuccess = () => {
 					<div className="h-4/6 p-4 flex flex-col gap-2 justify-center items-center ">
 						
 						{
-							isFirst 
+							!landing 
 							? <CelebrationSvg className="-my-20 rotate-12"/>
 							: <SleepSvg className="-my-16 overflow-visible"/>
 						}
 
 						<h3 className="text-white text-center text-28 leading-7 font-bold tracking-wide">
-							{isFirst ? <span>Woo-hoo!<br/>You’re almost there!</span> : "It's awake!" }
+							{!landing ? <span>Woo-hoo!<br/>You’re almost there!</span> : "It's awake!" }
 						</h3>
 						
 						<p className="text-white opacity-80 text-base text-center">
-							{isFirst ? 'Add crypto to your Watchlist and you’re done!' : 'Now you can sleep your way to the moon!'}
+							{!landing ? 'Add crypto to your Watchlist and you’re done!' : 'Now you can sleep your way to the moon!'}
 						</p>
 
 					</div>
 					
 					<div className="h-2/6 p-4 pb-30px flex flex-col gap-4 justify-center items-center">
-						<YellowButton onClick={() => history.replace('/')}>
-							Back to home
+						<YellowButton onClick={() => onDonePressed()}>
+							{landing ? 'Back to home' : 'Continue'}
 						</YellowButton>
 					</div>
 					
