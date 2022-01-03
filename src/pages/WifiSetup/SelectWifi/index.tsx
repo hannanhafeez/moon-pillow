@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { ReactComponent as WifiSvg } from '../../../assets/svg/wifi.svg'
 import {ReactComponent as TickSvg} from '../../../assets/svg/tick.svg'
 
@@ -10,12 +11,14 @@ import { WIFI_STATUS } from '../../../services/ServiceUrl'
 
 const SelectWifi = () => {
 	const history = useHistory()
-	const {data} = useWifiList()
+	const {data, refetch} = useWifiList()
 
 	const queryClient = useQueryClient()
 	const wifiStatusData: responseType = queryClient.getQueryData(WIFI_STATUS.name)
 
 	const onClick = (ssid: string) => history.push('/wifi-pw',{ssid})
+
+	useEffect(() => {refetch()}, [])
 
 	return (
 		<>
@@ -68,7 +71,7 @@ const SelectWifi = () => {
 				<div className="self-stretch px-4">
 					
 					<h4 className="block text-primary_yellow text-base mb-2 ">
-						Other nertworks:
+						Other networks:
 					</h4>
 				</div>
 			}

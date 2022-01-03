@@ -5,26 +5,29 @@ import Header from '../../../components/Header'
 import MaterialInput from '../../../components/MaterialInput'
 import React, { useCallback, useState } from 'react'
 import YellowButton from '../../../components/YellowButton'
-import { CONNECT_WIFI, WIFI_STATUS } from '../../../services/ServiceUrl'
+import { CONNECT_WIFI, SCAN_RESULTS, WIFI_STATUS } from '../../../services/ServiceUrl'
 import { ErrorMessageState, useErrorMessage } from '../../../hooks/useErrorMessage'
 import Alert from '../../../components/Alert'
 import { useQueryClient } from 'react-query'
 import { responseType } from '../../../hooks/useWifiStatus'
+import { useWifiList } from '../../../hooks/useWifiList'
 
 const WifiPassword = () => {
 	const history = useHistory()
 	const location:any = useLocation()
-	
+	// const { data:ssidList } = useWifiList()
+
 	const queryClient = useQueryClient()
 	
 
 	const [pw, setPW] = useState('')
 	const { error, showMessageForTime, resetMessage, setError}= useErrorMessage()
 	const data: responseType = queryClient.getQueryData(WIFI_STATUS.name)
+	const ssidList = queryClient.getQueryData(SCAN_RESULTS.name)
 
 	React.useEffect(()=>{
 		console.log(location.state);
-		data?.connected && history.replace('/')
+		// data?.connected && history.replace('/')
 	},[])
 
 	React.useEffect(()=>{
@@ -33,8 +36,12 @@ const WifiPassword = () => {
 		}else{
 			setError({message: data?.reason ?? "", shown: true})
 		}
-		data?.connected && history.replace('/')
+		// data?.connected && history.replace('/')
 	}, [data, data?.reason])
+
+	React.useEffect(() => { 
+		!(ssidList as string[])?.includes(location?.state?.ssid) && history.goBack()
+	}, [ssidList])
 
 	const onTextChange = useCallback((e: React.ChangeEvent<HTMLInputElement>)=>{
 		e.preventDefault();
@@ -56,6 +63,7 @@ const WifiPassword = () => {
 			.then(res=>res.text())
 			.then(res=>{
 				if(res === 'ok'){
+					queryClient.setQueryData(WIFI_STATUS.name, (oldData: any) => ({ ...oldData, connected: false, reason:''}))
 					history.push('/wifi-connecting',{ssid: location?.state?.ssid})
 				}else{
 					showMessageForTime('An unknow error occured!', 5000)

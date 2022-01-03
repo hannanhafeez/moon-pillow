@@ -22,7 +22,7 @@ const ConnectingWifi = () => {
 	const data: responseType = queryClient.getQueryData(WIFI_STATUS.name)
 	const landingStatus = useLandingStatus()
 
-	const landing = (landingStatus.data as LandingStatus).landing
+	const landing = (landingStatus.data as LandingStatus)?.landing
 
 	React.useEffect(()=>{
 		setTimeout(()=>{
@@ -39,6 +39,7 @@ const ConnectingWifi = () => {
 		// return () => clearTimeout(id)
 		console.log(data);
 		data?.connected && setConnected(true)
+		// data?.connected && setTimeout(()=> setConnected(true), 3000)
 	}, [data, data?.connected])
 
 
