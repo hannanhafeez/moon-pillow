@@ -7,7 +7,7 @@ export type AlertProps = {
 const Alert: React.FC<AlertProps> = ({message, danger=false, children}) => {
 	return (
 		<div className={
-			`w-full flex gap-2.5 p-4 bg-gradient-to-b ${danger ? 'from-[#FF6433] to-[#D43535]' : 'from-[#424ABE] to-[#00087F]'}
+			`w-full flex gap-2.5 p-4 bg-gradient-to-b ${danger ? 'from-danger_grad_light to-danger_grad_dark' : 'from-blue_grad_light to-blue_grad_dark'}
 			 text-white rounded-md`
 		}
 		>

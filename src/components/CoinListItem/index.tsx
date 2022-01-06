@@ -20,6 +20,8 @@ const CoinListItem : React.FC<CoinListItemProps> = (props) => {
 		isTypeEdit = false, isEditable=true,
 		onButtonPressed 
 	} = props
+	// console.log(alias);
+	
  	return (
 		<div className="flex items-center p-3 bg-secondary_dark rounded-lg">
 			<div className="h-10 w-10 grid place-content-center rounded-full overflow-hidden p-0.5">

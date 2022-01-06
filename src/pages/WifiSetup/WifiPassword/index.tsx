@@ -12,6 +12,12 @@ import { useQueryClient } from 'react-query'
 import { responseType } from '../../../hooks/useWifiStatus'
 import { useWifiList } from '../../../hooks/useWifiList'
 
+const authFailed = "Authentication Failed - Invalid Password";
+const notInRange = "WiFi is not in range";
+const notAnswering = "WiFi is not answering";
+
+const DEFAULT_ERROR_MESSAGE = "Oops, there seems to be a problem connecting to your network. Check that you're within the Wi-Fi range and remember to select 2.4ghz."
+
 const WifiPassword = () => {
 	const history = useHistory()
 	const location:any = useLocation()
@@ -34,7 +40,9 @@ const WifiPassword = () => {
 		if(data?.reason === "" ){
 			resetMessage()
 		}else{
-			setError({message: data?.reason ?? "", shown: true})
+			const reason = data?.reason ?? "" ;
+			const message = (reason === notInRange || reason === notAnswering) ? DEFAULT_ERROR_MESSAGE : reason ;
+			(location?.state?.ssid === data?.ssid) && setError({message: message, shown: true})
 		}
 		// data?.connected && history.replace('/')
 	}, [data, data?.reason])
@@ -66,13 +74,14 @@ const WifiPassword = () => {
 					queryClient.setQueryData(WIFI_STATUS.name, (oldData: any) => ({ ...oldData, connected: false, reason:''}))
 					history.push('/wifi-connecting',{ssid: location?.state?.ssid})
 				}else{
-					showMessageForTime('An unknow error occured!', 5000)
+					console.log('An unknow error occured!');
+					showMessageForTime(DEFAULT_ERROR_MESSAGE, 5000)
 				}
 			})
 			.catch((e)=>{
 				console.log(e);
-				
-				showMessageForTime("An error occured, please try again!", 10000)
+				console.log("An error occured, please try again!");
+				showMessageForTime(DEFAULT_ERROR_MESSAGE, 10000)
 			})
 	}
 

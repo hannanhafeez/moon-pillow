@@ -21,8 +21,8 @@ const VibrationSuccess = () => {
 		myHeaders.append("Content-Type", "application/json");
 
 		const raw = JSON.stringify({
-			"vibration": landingData?.vibration ? "true" : "false",
-			"landing": "true"
+			"vibration": "true",
+			"landing": "true",
 		});
 
 		const requestOptions = {

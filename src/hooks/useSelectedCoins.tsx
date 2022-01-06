@@ -14,6 +14,7 @@ export const useSelectedCoins = () => {
 	const { data: selectedList, ...everyThingElse } = useQuery(GET_TRIGGERS.name, () => {
 		return fetch(GET_TRIGGERS.url)
 			.then(res => res.json())
+			.then(res => { console.log(res); return res})
 			.catch(rejected => console.log(rejected))
 	},
 		{

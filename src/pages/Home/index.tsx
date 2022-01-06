@@ -19,7 +19,7 @@ const Home = () => {
 	const data:any = queryClient.getQueryData(WIFI_STATUS.name)
 
 	const {selectedCoins, selectedList} = useSelectedCoins()
-
+	
 	console.log({ selectedCoins, selectedList});
 	
 	const length = selectedCoins.length

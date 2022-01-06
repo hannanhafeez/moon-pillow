@@ -12,6 +12,13 @@ import { WIFI_STATUS } from '../../../services/ServiceUrl'
 import { responseType } from '../../../hooks/useWifiStatus'
 import { LandingStatus, useLandingStatus } from '../../../hooks/useLandingStatus'
 
+
+
+const authFailed = "Authentication Failed - Invalid Password";
+const notInRange = "WiFi is not in range";
+const notAnswering = "WiFi is not answering";
+
+
 const ConnectingWifi = () => {
 	const history = useHistory()
 	const location: any = useLocation()
@@ -22,12 +29,12 @@ const ConnectingWifi = () => {
 	const data: responseType = queryClient.getQueryData(WIFI_STATUS.name)
 	const landingStatus = useLandingStatus()
 
-	const landing = (landingStatus.data as LandingStatus)?.landing
+	const vibration = (landingStatus.data as LandingStatus)?.vibration
 
 	React.useEffect(()=>{
 		setTimeout(()=>{
 			const res: responseType = queryClient.getQueryData(WIFI_STATUS.name);
-			if (res?.reason === "Authentication Failed - Invalid Password"){
+			if (res?.reason === authFailed || res?.reason === notInRange || res?.reason === notAnswering){
 				history.goBack();
 			}
 		}, 10 * 1000)
@@ -37,6 +44,9 @@ const ConnectingWifi = () => {
 	React.useEffect(()=>{
 		// /* const id =  */setTimeout(()=> setConnected(true), 3000)
 		// return () => clearTimeout(id)
+		if (data?.reason === authFailed || data?.reason === notInRange || data?.reason === notAnswering){
+			history.goBack();
+		}
 		console.log(data);
 		data?.connected && setConnected(true)
 		// data?.connected && setTimeout(()=> setConnected(true), 3000)
@@ -85,14 +95,14 @@ const ConnectingWifi = () => {
 
 								</div>
 
-								{	!landing &&
+								{	!vibration &&
 									<p className="text-center text-white text-base mb-8">
 										Next, let's test the vibration alert on your Bybit Moon Pillow.
 									</p>
 								}
 
-								<YellowButton className="z-10" onClick={() => history.replace(landing ? '/' : '/vibration')}>
-									{landing ? 'Back to home' : 'Continue'}
+								<YellowButton className="z-10" onClick={() => history.replace(vibration ? '/' : '/vibration')}>
+									{vibration ? 'Back to home' : 'Continue'}
 								</YellowButton>
 							</>
 						:

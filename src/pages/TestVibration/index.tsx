@@ -23,6 +23,27 @@ const TestVibration = () => {
 
 	const landingData = queryClient.getQueryData<LandingStatus|undefined>(GET_LANDING_STATUS.name);
 	const landing = landingData?.landing
+
+	React.useEffect(()=>{
+		const requestOptions: RequestInit = {
+			method: 'POST',
+			body: JSON.stringify({ vibrate: true})
+		};
+
+		fetch(SEND_VIBRATE.url, requestOptions)
+			.then(res => res.text())
+			.then(res => {
+				console.log(res);
+				if (res === 'ok' || res === 'Captive Portal') {
+				} else {
+					setError({ message: 'An unknow error occured!', shown: true })
+				}
+			})
+			.catch((e) => {
+				console.log(e);
+				setError({ message: "An error occured, please try again!", shown: true })
+			})
+	},[])
 	
 	const onClick = React.useCallback(() => {
 		vibratePressed && openModal()
