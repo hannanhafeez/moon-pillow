@@ -54,7 +54,7 @@ function App() {
 					?<MonitoringMode/>
 					:<Switch >
 						<Route exact path="/">
-							{data?.connected ? <Home/> : <LandingWifi/>}
+								{data?.connected ? <Home/> : landingStatus?.landing ? <Home/> : <LandingWifi/>}
 						</Route>
 						{/* <Route path="/about">
 							<About />

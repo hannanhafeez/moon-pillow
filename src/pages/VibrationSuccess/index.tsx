@@ -14,7 +14,7 @@ const VibrationSuccess = () => {
 	const queryClient = useQueryClient();
 
 	const landingData = queryClient.getQueryData<LandingStatus | undefined>(GET_LANDING_STATUS.name);
-	const landing = landingData?.landing
+	const vibration = landingData?.vibration
 
 	const onDonePressed = () => {
 		const myHeaders = new Headers();
@@ -45,7 +45,7 @@ const VibrationSuccess = () => {
 		<>
 			{/* Header */}
 			{
-				landing
+				vibration
 				? <Header onBackPressed={() => history.goBack()} />
 				: <div className="self-stretch min-h-18px"/>
 			}
@@ -56,24 +56,24 @@ const VibrationSuccess = () => {
 					<div className="h-4/6 p-4 flex flex-col gap-2 justify-center items-center ">
 						
 						{
-							!landing 
+							!vibration 
 							? <CelebrationSvg className="-my-20 rotate-12"/>
 							: <SleepSvg className="-my-16 overflow-visible"/>
 						}
 
 						<h3 className="text-white text-center text-28 leading-7 font-bold tracking-wide">
-							{!landing ? <span>Woo-hoo!<br/>You’re almost there!</span> : "It's awake!" }
+							{!vibration ? <span>Woo-hoo!<br/>You’re almost there!</span> : "It's awake!" }
 						</h3>
 						
 						<p className="text-white opacity-80 text-base text-center">
-							{!landing ? 'Add crypto to your Watchlist and you’re done!' : 'Now you can sleep your way to the moon!'}
+							{!vibration ? 'Add crypto to your Watchlist and you’re done!' : 'Now you can sleep your way to the moon!'}
 						</p>
 
 					</div>
 					
 					<div className="h-2/6 p-4 pb-30px flex flex-col gap-4 justify-center items-center">
 						<YellowButton onClick={() => onDonePressed()}>
-							{landing ? 'Back to home' : 'Continue'}
+							{vibration ? 'Back to home' : 'Continue'}
 						</YellowButton>
 					</div>
 					

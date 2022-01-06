@@ -1,4 +1,5 @@
 import { Link, useHistory } from 'react-router-dom'
+import { useEffect } from 'react'
 
 import LogoImg from '../../assets/img/Logo@2x.png'
 import CoinListItem, { CoinListItemProps } from '../../components/CoinListItem'
@@ -7,10 +8,16 @@ import {ReactComponent as VirationSvg} from '../../assets/svg/vibration.svg'
 import {ReactComponent as LegalSvg} from '../../assets/svg/legal.svg'
 import {ReactComponent as WifiSvg} from '../../assets/svg/wifi.svg'
 import {ReactComponent as EditSvg} from '../../assets/svg/edit.svg'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 import { WIFI_STATUS } from '../../services/ServiceUrl'
 import { useSelectedCoins } from '../../hooks/useSelectedCoins'
+import { ErrorMessageState, useErrorMessage } from '../../hooks/useErrorMessage'
+import Alert from '../../components/Alert'
 
+const notInRange = "WiFi is not in range";
+const notAnswering = "WiFi is not answering";
+
+const DEFAULT_ERROR_MESSAGE = "Unable to connect to Wi-Fi, try reconnecting your Wi-Fi again to connect to your pillow."
 
 const Home = () => {
 	const history = useHistory();
@@ -19,10 +26,23 @@ const Home = () => {
 	const data:any = queryClient.getQueryData(WIFI_STATUS.name)
 
 	const {selectedCoins, selectedList} = useSelectedCoins()
+
+	const { error, showMessageForTime, resetMessage, setError } = useErrorMessage()
 	
 	console.log({ selectedCoins, selectedList});
 	
 	const length = selectedCoins.length
+
+	useEffect(() => {
+		if (data?.reason === "") {
+			resetMessage()
+		} else {
+			const reason = data?.reason ?? "";
+			const message = (reason === notInRange || reason === notAnswering) ? DEFAULT_ERROR_MESSAGE : reason;
+			setError({ message: message, shown: true })
+		}
+		// data?.connected && history.replace('/')
+	}, [data, data?.reason])
 
 	const onEditPressed = () => history.push('/edit')
 
@@ -37,21 +57,50 @@ const Home = () => {
 			</div>
 
 			<div className="self-stretch px-4">
-				<div className="flex items-center px-3 py-1 bg-secondary_dark rounded-lg">
-					<div className="h-8 w-8 grid place-content-center p-[1px]">
-						<WifiSvg className="w-5 h-5 fill-current text-primary_yellow"/>
-					</div>
 
-					<div className="mx-2 flex-1">
-						<h4 className="text-white font-bold text-base">
-							{data?.ssid ?? 'Wifi Name'}
-						</h4>
-					</div>
+				<div className='my-4'>
+					{
+						(error as ErrorMessageState).shown &&
+						<Alert message={(error as ErrorMessageState).message} danger />
+					}
+				</div>
 
-					<button className="flex items-center gap-2 py-3" onClick={() => history.push('/wifi')}>
-						<EditSvg className="fill-current text-primary_yellow"/>
-						<span className="text-primary_yellow font-medium text-14">Edit</span>
-					</button>
+
+
+				<div className="flex items-center justify-center px-3 py-1 bg-secondary_dark rounded-lg">
+					{
+						data?.connected ? 
+						<>
+							<div className="h-8 w-8 grid place-content-center p-[1px]">
+								<WifiSvg className="w-5 h-5 fill-current text-primary_yellow"/>
+							</div>
+
+							<div className="mx-2 flex-1">
+								<h4 className="text-white font-bold text-base">
+									{data?.ssid ?? 'Wifi Name'}
+								</h4>
+							</div>
+
+							<button className="flex items-center gap-2 py-3" onClick={() => history.push('/wifi')}>
+								<EditSvg className="fill-current text-primary_yellow"/>
+								<span className="text-primary_yellow font-medium text-14">Edit</span>
+							</button>
+						</>
+						:
+						<button className='flex items-center justify-center w-full py-2 -my-1' 
+							onClick={() => history.push('/wifi')}
+						>
+								<div className="h-8 w-8 grid place-content-center p-[1px]">
+									<WifiSvg className="w-5 h-5 fill-current text-primary_yellow" />
+								</div>
+
+								<div className="mx-2">
+									<h4 className="text-primary_yellow font-bold text-base">
+										{'Connect to Wi-Fi'}
+									</h4>
+								</div>
+						</button>
+					}
 					
 				</div>
 			</div>

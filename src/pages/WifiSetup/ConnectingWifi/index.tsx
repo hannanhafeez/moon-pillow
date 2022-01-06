@@ -8,7 +8,7 @@ import { useHistory, useLocation } from 'react-router'
 import Header from '../../../components/Header'
 import YellowButton from '../../../components/YellowButton'
 import { useQueryClient } from 'react-query'
-import { WIFI_STATUS } from '../../../services/ServiceUrl'
+import { GET_LANDING_STATUS, WIFI_STATUS } from '../../../services/ServiceUrl'
 import { responseType } from '../../../hooks/useWifiStatus'
 import { LandingStatus, useLandingStatus } from '../../../hooks/useLandingStatus'
 
@@ -46,9 +46,33 @@ const ConnectingWifi = () => {
 		// return () => clearTimeout(id)
 		if (data?.reason === authFailed || data?.reason === notInRange || data?.reason === notAnswering){
 			history.goBack();
+			return
 		}
 		console.log(data);
 		data?.connected && setConnected(true)
+
+		const myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+
+		const raw = JSON.stringify({
+			"vibration": vibration ? "true" : "false",
+			"landing": "true",
+		});
+
+		const requestOptions = {
+			method: 'POST',
+			headers: myHeaders,
+			body: raw
+		};
+
+		fetch("http://8.8.8.8/poststatus", requestOptions)
+			.then(response => response.text())
+			.then(r => {
+				console.log(r);
+				return queryClient.fetchQuery(GET_LANDING_STATUS.name);
+			})
+			.catch(e => console.log(e))
+			// .finally(() => history.replace('/'))
 		// data?.connected && setTimeout(()=> setConnected(true), 3000)
 	}, [data, data?.connected])
 
