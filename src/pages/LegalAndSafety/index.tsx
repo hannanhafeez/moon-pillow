@@ -6,7 +6,6 @@ import Header from '../../components/Header'
 const LegalAndSafety = () => {
 	const history = useHistory()
 	const list = [
-		{ name: "Instructions", onClick: () => history.push('/instructions')},
 		{ name: "Product Warnings and Disclaimers", onClick: () => history.push('/disclaimers')},
 	]
 
