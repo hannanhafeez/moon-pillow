@@ -11,4 +11,5 @@ module.exports = {
 	danger_grad_dark: '#D43535',
 	blue_grad_light: '#424ABE',
 	blue_grad_dark: '#00087F',
+	alert_general_bg: '#222330',
 }

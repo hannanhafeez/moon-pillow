@@ -48,11 +48,12 @@ function App() {
 					}
 				>
 				{
-					(!data && !isLoading)
+					/* (!data && !isLoading)
 					?<MonitoringMode/>
-					:<Switch >
+					: */<Switch >
 						<Route exact path="/">
-								{data?.connected ? <Home/> : landingStatus?.landing ? <Home/> : <LandingWifi/>}
+								{/* {data?.connected ? <Home/> : landingStatus?.landing ? <Home/> : <LandingWifi/>} */}
+								<Home/>
 						</Route>
 						{/* <Route path="/about">
 							<About />

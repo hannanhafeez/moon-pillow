@@ -13,6 +13,27 @@ body {
 	background-color: black;
 }
 
+::-webkit-scrollbar {
+	--scroll-width: 10px;
+	width: var(--scroll-width);
+	height: var(--scroll-width);
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #ffffff22;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #555;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #666;
+}
+
 code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
 		monospace;

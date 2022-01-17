@@ -159,7 +159,7 @@ const TestVibration = () => {
 								
 								<div className="my-5">
 									<p className="text-base text-white">
-										Place your hand on the Bybit Moon PIllow to check that the vibration alert is working.
+										Place your hand on the Bybit Moon Pillow to check that the vibration alert is working.
 									</p>
 									<br/>
 									<p className="text-base text-white">

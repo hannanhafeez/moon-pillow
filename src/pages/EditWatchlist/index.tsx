@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import CoinListItem, { CoinListItemProps } from '../../components/CoinListItem'
 
@@ -14,16 +14,18 @@ import Header from '../../components/Header'
 import YellowButton from '../../components/YellowButton'
 import { useHistory } from 'react-router'
 import { useMutation, useQuery } from 'react-query'
-import { ADD_COINS, ADD_TRIGGERS, GET_COINS, GET_TRIGGERS } from '../../services/ServiceUrl'
+import { ADD_COINS, ADD_TRIGGERS, GET_COINS, GET_TRIGGERS, WIFI_STATUS } from '../../services/ServiceUrl'
 import { useSelectedCoins } from '../../hooks/useSelectedCoins'
 import { CoinNamesObject, CoinShortName } from '../../hooks/hooks.d'
 import { useErrorMessage } from '../../hooks/useErrorMessage'
 import { queryClient } from '../../services/QueryClient'
+import { clearTimeout } from 'timers'
 
 const EditWatchlist = () => {
 	const history = useHistory()
 	const [isOpen, setIsOpen] = useState(false)
 	const {error, showMessageForTime} = useErrorMessage()
+	const data: any = queryClient.getQueryData(WIFI_STATUS.name)
 	const { data:coinsList } = useQuery(GET_COINS.name, ()=>{
 			return fetch(GET_COINS.url)
 					.then(res=>res.json())
@@ -35,6 +37,14 @@ const EditWatchlist = () => {
 			refetchInterval: 15 * 1000
 		}
 	)
+
+	useEffect(()=>{
+		if(!data){
+			setTimeout(()=>{
+				history.goBack();
+			}, 3000)
+		}
+	}, [data, history])
 
 	const coinMutation = useMutation((list: CoinListItemProps[])=> {
 		const myHeaders = new Headers();
@@ -157,7 +167,7 @@ const EditWatchlist = () => {
 
 			<div className="self-stretch min-h-30px"/>
 
-			<div className="self-stretch flex flex-col gap-30px">
+			<div className="self-stretch flex flex-grow flex-col gap-30px">
 				<div className="self-stretch px-4 grid gap-2.5 text-white">
 					<h1 className="font-bold text-28 leading-7 tracking-wide">
 						{selectedLength !== 0 ? 'Edit Watchlist' : 'Select crypto to watch'}
@@ -301,9 +311,16 @@ const EditWatchlist = () => {
 					</div>
 				</Dialog>
 			</Transition>
-
 			
 			<div className="self-stretch flex flex-col gap-4 items-stretch sticky bottom-0 right-0 left-0">
+
+				{/* Monitoring Mode Button */}
+				{
+					!data &&
+					<Alert general={true} message={'Switch your Bybit Moon Pillow to "ON" mode to get notified of alerts!'}
+						onClick={() => history.push('/monitoring-mode')}
+					/>
+				}
 				{	
 					error.shown &&	
 					<div className="px-4">

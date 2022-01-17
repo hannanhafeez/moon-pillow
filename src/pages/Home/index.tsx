@@ -8,6 +8,7 @@ import {ReactComponent as VirationSvg} from '../../assets/svg/vibration.svg'
 import {ReactComponent as LegalSvg} from '../../assets/svg/legal.svg'
 import {ReactComponent as WifiSvg} from '../../assets/svg/wifi.svg'
 import {ReactComponent as EditSvg} from '../../assets/svg/edit.svg'
+
 import { useQueryClient } from 'react-query'
 import { WIFI_STATUS } from '../../services/ServiceUrl'
 import { useSelectedCoins } from '../../hooks/useSelectedCoins'
@@ -60,7 +61,7 @@ const Home = () => {
 
 				<div className='my-4'>
 					{
-						(error as ErrorMessageState).shown &&
+						data && (error as ErrorMessageState).shown &&
 						<Alert message={(error as ErrorMessageState).message} danger />
 					}
 				</div>
@@ -128,13 +129,17 @@ const Home = () => {
 			</div>
 
 			<div className="self-stretch px-4 my-2">
-				<button className={
+				<button disabled={!data} className={
 						"w-full p-3 font-medium text-base rounded-md "
 						+ 
 						(
 							length===0 
 							? " bg-primary_yellow focus:bg-primary_yellow_hover"
 							: " text-white border border-white focus:bg-primary_white_hover"
+						)
+						+
+						(
+							!data && ' cursor-not-allowed opacity-30'
 						)
 					}
 					onClick={onEditPressed}
@@ -147,11 +152,22 @@ const Home = () => {
 
 			<div className="self-stretch flex-1" />
 
+			{/* Monitoring Mode Button */}
+			{
+				!data &&
+				<Alert general={true} message={'Switch your Bybit Moon Pillow to "ON" mode to get notified of alerts!'} 
+					onClick={() => history.push('/monitoring-mode')}
+				/>
+			}
+
+
 			<div className={
 					"w-full bg-black sticky -bottom-8 p-4 grid grid-cols-2 divide-x divide-gray-500 " +
 					"text-center text-14 text-primary_yellow font-medium tracking-wider"
 				}
 			>
+
+
 				<Link to="/vibration" className="flex justify-center items-center">
 					<VirationSvg className="mx-2"/>
 					Test vibration
